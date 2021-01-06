@@ -1,0 +1,33 @@
+#######################################
+# Syntax Coloring Map NesRob
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+blinkCommand	KEYWORD2
+Command	KEYWORD2
+
+#######################################
+# Structures (KEYWORD3)
+#######################################
+NesRob	KEYWORD3
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+CALIBRATE_MOTORS	LITERAL1
+TEST_LED	LITERAL1
+ARMS_LEFT	LITERAL1
+ARMS_RIGHT	LITERAL1
+ARMS_LOWER	LITERAL1
+ARMS_LOWER_2	LITERAL1
+ARMS_RAISE	LITERAL1
+ARMS_RAISE_2	LITERAL1
+HANDS_CLOSE	LITERAL1
+HANDS_OPEN	LITERAL1
