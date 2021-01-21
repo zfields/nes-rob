@@ -16,14 +16,25 @@ NesRob::blinkCommand (
   Command command_
 ) {
   // Send initialization sequence
-  ::delayMicroseconds(66666); // 0000 (required delay between commands)
+  // Max delay of 16383 guaranteed by Arduino reference
+  // https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/
+  {
+    ::delayMicroseconds(16383);
+    ::delayMicroseconds(16383);
+    ::delayMicroseconds(16383);
+    ::delayMicroseconds(16383);
+    ::delayMicroseconds(1134);
+  } // 0000 (required delay between commands)
   {
     ::digitalWrite(_led_pin, HIGH);
     ::delayMicroseconds(1500);
     ::digitalWrite(_led_pin, LOW);
     ::delayMicroseconds(15166);
   } // 1
-  ::delayMicroseconds(16666); // 0
+  {
+    ::delayMicroseconds(16383);
+    ::delayMicroseconds(283);
+  } // 0
 
   // Flash command sequence
   for (int i = 7 ; i >= 0 ; --i) {
