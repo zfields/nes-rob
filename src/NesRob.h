@@ -3,6 +3,11 @@
 
 #include <cstdint>
 
+class SignalDriver;
+class SignalGenerator;
+class HalClock;
+class HalGpio;
+
 class NesRob {
   public:
   enum class Command : uint8_t {
@@ -19,7 +24,11 @@ class NesRob {
   };
 
   NesRob (
-    unsigned int led_pin
+    unsigned int _pin
+  );
+
+  ~NesRob (
+    void
   );
 
   void
@@ -28,7 +37,10 @@ class NesRob {
   );
 
   private:
-  const unsigned int _led_pin;
+  const HalClock * const _hal_clock;
+  const HalGpio * const _hal_gpio;
+  const SignalDriver * const _sig_drv;
+  const SignalGenerator * const _sig_gen;
 };
 
 #endif // NES_ROB_H
