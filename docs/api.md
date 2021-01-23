@@ -57,41 +57,73 @@ Methods
 
 Requires a pin number argument to creates the NesRob instance.
 
-#### Syntax
+**Signature:**
 
+```cpp
+NesRob::NesRob(unsigned int);
 ```
-NesRob rob(13);
-```
 
-#### Parameters
+**Parameters:**
 
-* _pin_: the pin used to drive the LED
+- _pin_: the pin used to drive the LED
 
-#### Example
+**Example:**
 
-```c++
+```cpp
 #include <NesRob.h>
 
 NesRob rob;
 ```
-### `blinkCommand(Command)`
+
+### `blinkCommand(Command)` [deprecated]
 
 Manipulates R.O.B. by blinking the signal related to the `Command` provided to
 the API.
 
-#### Syntax
+**Signature:**
 
+```cpp
+void NesRob::blinkCommand(NesRob::Command);
 ```
-rob.blinkCommand(NesRob::Command::HANDS_CLOSE);
+
+**Parameters:**
+
+- _command_: a bit array used to indicate the flash pattern
+
+> _**NOTE:** This API was deprecated in v1.1.0, and is no longer supported._
+
+**Returns:**
+
+Nothing
+
+**See also:**
+
+- [`sendCommand`](#sendcommand\(command\))
+
+### `sendCommand(Command)`
+
+Manipulates R.O.B. by blinking the signal related to the `Command` provided to
+the API.
+
+**Signature:**
+
+```cpp
+int NesRob::sendCommand(NesRob::Command);
 ```
 
-#### Parameters
+**Parameters:**
 
-* _command_: a bit array used to indicate the flash pattern
+- _command_: a bit array used to indicate the flash pattern
 
-#### Example
+**Returns:**
 
-```c++
+An `int`, describing the result of the command.
+
+- `0` - Success: The command executed as expected.
+
+**Example:**
+
+```cpp
 #include <NesRob.h>
 
 NesRob rob;
@@ -99,11 +131,11 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.blinkCommand(NesRob::Command::HANDS_CLOSE);
+  rob.sendCommand(NesRob::Command::HANDS_CLOSE);
   delay(1000);
 }
 ```
 
-#### See also
+**See also:**
 
-* [`Command` enum class](#command-enum-class)
+- [`Command` enum class](#command-enum-class)

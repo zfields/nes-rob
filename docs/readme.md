@@ -22,7 +22,7 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.blinkCommand(NesRob::Command::HANDS_CLOSE);
+  rob.sendCommand(NesRob::Command::HANDS_CLOSE);
   delay(1000);
 }
 ```
@@ -31,7 +31,7 @@ void loop() {
 > those on the
 > [Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/),
 > as well as
-> [Anne Barela's work](https://learn.adafruit.com/controlling-a-classic-nintendo-r-o-b-robot-using-circuit-playground-express/overview)
+> [Anne Barela's guide](https://learn.adafruit.com/controlling-a-classic-nintendo-r-o-b-robot-using-circuit-playground-express/overview)
 > at Adafruit._
 
 [API Documentation](api.md)

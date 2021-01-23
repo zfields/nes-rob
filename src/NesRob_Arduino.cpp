@@ -27,3 +27,10 @@ NesRob::blinkCommand (
 ) {
     _sig_gen->signal(static_cast<int>(command_));
 }
+
+int
+NesRob::sendCommand (
+    Command command_
+) {
+    return _sig_gen->signal(static_cast<int>(command_));
+}

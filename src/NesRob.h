@@ -31,8 +31,14 @@ class NesRob {
     void
   );
 
+  [[deprecated("Use sendCommand() instead.")]]
   void
   blinkCommand(
+    Command command
+  );
+
+  int
+  sendCommand(
     Command command
   );
 
