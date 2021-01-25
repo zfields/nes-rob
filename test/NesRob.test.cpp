@@ -17,3 +17,7 @@ TEST_CASE("Command Enum Class Verification", "[commands]") {
     CHECK(static_cast<int>(NesRob::Command::ARMS_CLOSE) == 0xBE);
     CHECK(static_cast<int>(NesRob::Command::ARMS_OPEN) == 0xEE);
 }
+
+//TODO: Research FakeIt to see if it can replace non-interface, internal dependencies, then implement the following tests.
+//TEST_CASE("`sendCommand()` passed `command` argument to signal generator without modification", "[sendCommand][parameter]") {
+//TEST_CASE("`sendCommand()` returns result from signal generator without modification", "[sendCommand][result]") {

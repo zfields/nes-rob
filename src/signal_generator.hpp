@@ -6,7 +6,7 @@ class SignalDriver;
 class SignalGenerator {
   public:
     SignalGenerator (const SignalDriver * driver);
-    int signal (int command_sequence) const;
+    int signal (int sequence) const;
 
   private:
     const SignalDriver * const _driver;

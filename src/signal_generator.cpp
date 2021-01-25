@@ -10,20 +10,21 @@ SignalGenerator::SignalGenerator (
 
 int
 SignalGenerator::signal (
-    int command_sequence_
+    int sequence_
 ) const {
-    // Send initialization sequence
-    _driver->pulse(0);
-    _driver->pulse(0);
-    _driver->pulse(0);
-    _driver->pulse(1);
-    _driver->pulse(0);
+    int result = 0;
+    const unsigned int preamble[] = {0,0,0,1,0};
 
-    // Flash command sequence
-    for (int i = 7 ; i >= 0 ; --i) {
-        unsigned int active = ((static_cast<unsigned int>(command_sequence_) >> i) & static_cast<unsigned int>(0x1));
-        _driver->pulse(active);
+    // Pulse initialization sequence
+    for (unsigned int i = 0 ; i < (sizeof(preamble)/sizeof(unsigned int)) ; ++i) {
+        if ((result = _driver->pulse(preamble[i]))) { break; }
     }
 
-    return 0;
+    // Pulse sequence
+    for (int i = 7 ; i >= 0 && !result ; --i) {
+        unsigned int active = ((static_cast<unsigned int>(sequence_) >> i) & static_cast<unsigned int>(0x1));
+        if ((result = _driver->pulse(active))) { break; }
+    }
+
+    return result;
 }

@@ -7,7 +7,7 @@
 #include "signal_driver.hpp"
 #include "signal_generator.hpp"
 
-TEST_CASE("Command sequences are prefixed with a 5-bit initialization sequence", "[signal_driver][preamble]") {
+TEST_CASE("Sequences are 8 bits, prefixed with a 5-bit initialization sequence", "[signal_driver][preamble]") {
     // Setup
     fakeit::Mock<SignalDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
@@ -21,6 +21,72 @@ TEST_CASE("Command sequences are prefixed with a 5-bit initialization sequence",
     CHECK(true);
 }
 
-//TEST_CASE("5-bit initialization sequence is `00010`", "[signal_driver][preamble]") {
-//TEST_CASE("Command sequences matches signal parameter", "[signal_driver][preamble]") {
-//TEST_CASE("Command sequences halts when `pulse` returns error", "[signal_driver][error]") {
+TEST_CASE("5-bit initialization sequence is `00010`", "[signal_driver][preamble]") {
+    // Setup
+    fakeit::Mock<SignalDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0x17);
+
+    // Evalulate Result
+    fakeit::Verify((Method(mock_driver,pulse).Using(0) * 3) + Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0) + (Method(mock_driver,pulse).Using(fakeit::_) * 8)).Once();
+    CHECK(true);
+}
+
+TEST_CASE("Sequences matches sequence parameter", "[signal_driver][sequence]") {
+    // Setup
+    fakeit::Mock<SignalDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0xAA);
+
+    // Evalulate Result
+    fakeit::Verify((Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
+    CHECK(true);
+}
+
+TEST_CASE("Sequences longer than 8 bits will only use the bottom 8-bits", "[signal_driver][sequence]") {
+    // Setup
+    fakeit::Mock<SignalDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0xCC55FFAA);
+
+    // Evalulate Result
+    fakeit::Verify((Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
+    CHECK(true);
+}
+
+TEST_CASE("Signal halts when `pulse` returns error during preamble", "[signal_driver][error][preamble]") {
+    // Setup
+    fakeit::Mock<SignalDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).Return(0,0,1);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0xAA);
+
+    // Evalulate Result
+    fakeit::Verify(Method(mock_driver,pulse)).Exactly(3);
+    CHECK(true);
+}
+
+TEST_CASE("Signal halts when `pulse` returns error during sequence", "[signal_driver][error]") {
+    // Setup
+    fakeit::Mock<SignalDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).Return(0,0,0,0,0,0,0,1);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0xAA);
+
+    // Evalulate Result
+    fakeit::Verify(Method(mock_driver,pulse)).Exactly(8);
+    CHECK(true);
+}
