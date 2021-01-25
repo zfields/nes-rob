@@ -1,10 +1,10 @@
 /*
-  Close R.O.B.'s Hands
+  Close R.O.B.'s Arms
 
   Turns on and off a light emitting diode (LED) connected to a digital pin to
   send control signals to the NES R.O.B. When R.O.B. is powered on, it executes
-  a calibration routine, which leaves it facing forward with hands open. This
-  sketch causes R.O.B.'s hands to close, validating your hardware configuration.
+  a calibration routine, which leaves it facing forward with arms open. This
+  sketch causes R.O.B.'s arms to close, validating your hardware configuration.
 
   The circuit:
   - Use the onboard LED (may require a brighter LED if the room is too bright).
@@ -32,6 +32,6 @@ void setup() {
 
 // Blink command at 1 Hz
 void loop() {
-  rob.sendCommand(NesRob::Command::HANDS_CLOSE);
-  delay(1000);
+  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
+  ::delay(1000);
 }

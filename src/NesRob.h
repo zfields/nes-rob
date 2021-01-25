@@ -19,8 +19,10 @@ class NesRob {
     ARMS_LOWER_2 = 0xFB,
     ARMS_RAISE = 0xFA,
     ARMS_RAISE_2 = 0xBB,
-    HANDS_CLOSE = 0xBE,
-    HANDS_OPEN = 0xEE,
+    ARMS_CLOSE = 0xBE,
+    ARMS_OPEN = 0xEE,
+    HANDS_CLOSE [[deprecated("Use ARMS_CLOSE instead.")]] = 0xBE,
+    HANDS_OPEN [[deprecated("Use ARMS_OPEN instead.")]] = 0xEE,
   };
 
   NesRob (

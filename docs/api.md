@@ -42,11 +42,19 @@ Command List:
 
   Raise R.O.B.'s arms two notches (on back of spine) [1,6].
 
-- `HANDS_CLOSE`
+- `ARMS_CLOSE`
+
+  Brings R.O.B.'s arms together.
+
+- `HANDS_CLOSE` [Deprecated]
 
   Brings R.O.B.'s hands together.
 
-- `HANDS_OPEN`
+- `ARMS_OPEN`
+
+  Spreads R.O.B.'s arms apart.
+
+- `HANDS_OPEN` [Deprecated]
 
   Spreads R.O.B.'s hands apart.
 
@@ -131,7 +139,7 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.sendCommand(NesRob::Command::HANDS_CLOSE);
+  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
   delay(1000);
 }
 ```

@@ -51,8 +51,8 @@ line from light or partial commands.
 - [`0xFB`] ARMS_LOWER_2
 - [`0xFA`] ARMS_RAISE
 - [`0xBB`] ARMS_RAISE_2
-- [`0xBE`] HANDS_CLOSE
-- [`0xEE`] HANDS_OPEN
+- [`0xBE`] ARMS_CLOSE
+- [`0xEE`] ARMS_OPEN
 
 Wired Signals
 -------------
@@ -161,13 +161,13 @@ signal is released after 600-800us.
 
   ![Arms Raise 2 Protocol Timing Graph](img/protocol-arms-raise-2.png)
 
-- HANDS_CLOSE
+- ARMS_CLOSE
 
-  ![Hands Close Protocol Timing Graph](img/protocol-hands-close.png)
+  ![Arms Close Protocol Timing Graph](img/protocol-arms-close.png)
 
-- HANDS_OPEN
+- ARMS_OPEN
 
-  ![Hands Open Protocol Timing Graph](img/protocol-hands-open.png)
+  ![Arms Open Protocol Timing Graph](img/protocol-arms-open.png)
 
 Power Characteristics
 ---------------------

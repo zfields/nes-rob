@@ -22,7 +22,7 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.sendCommand(NesRob::Command::HANDS_CLOSE);
+  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
   delay(1000);
 }
 ```
@@ -42,7 +42,7 @@ _Click the title to view the API documentation page._
 Examples
 --------
 
-* [CloseHands](https://www.github.com/zfields/nes-rob/tree/main/examples/CloseHands/CloseHands.ino):
+* [CloseArms](https://www.github.com/zfields/nes-rob/tree/main/examples/CloseArms/CloseArms.ino):
 Validate your hardware configuration by sending a simple command to R.O.B.
 
 [Research](research.md)
