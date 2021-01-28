@@ -16,19 +16,25 @@ Light Signals
 -------------
 
 R.O.B. has a light sensor in the left eye. When R.O.B.'s head is directed toward
-a R.O.B. compatible game, either [Gyromite](https://en.wikipedia.org/wiki/R.O.B.#Gyromite)
-or [Stack-up](https://en.wikipedia.org/wiki/R.O.B.#Stack-Up), the game will emit
-light signals instructing R.O.B. how to play along. The light signals are
-comprised of a 13-bit pattern with a 5-bit preamble of `00010`, followed by a
-[unique 8-bit command sequence](#command-sequence). On screen, `0`'s are
-represented as black flashes, and `1`'s are represented as green flashes.
+a R.O.B. compatible game, either
+[Gyromite](https://en.wikipedia.org/wiki/R.O.B.#Gyromite) or
+[Stack-up](https://en.wikipedia.org/wiki/R.O.B.#Stack-Up), the game will emit
+light signals instructing R.O.B. how to play along. The light signals are NTSC
+encoded, black and green flashes. In the [command sequence](#command-sequence),
+black flashes are represented as `0`'s, and green flashes are represented as
+`1`'s.
 
 Fortunately, these signals can be reproduced using any color LED and adhering to
 the timing required to emulate NTSC signals. When using an LED, `0` (or black)
 can be recreated by simply leaving the LED off, while `1` (or green) can be
 recreated by turning the LED on.
 
-### Preamble
+### Command Sequence
+
+A command sequence is comprised of a 13-bit pattern with a 5-bit preamble of
+`00010`, followed by a unique 8-bit [command byte](#command-bytes).
+
+#### Preamble
 
 The preamble begins with three off bits. This is important during gameplay where
 light is ever present and generating signal noise. The leading off bits seem
@@ -38,10 +44,11 @@ bits of the preamble ensure enough space has passed between successive commands,
 which allows the command pattern to be distinguished from noise on the signal
 line from light or partial commands.
 
-> _**NOTE:** A [post in the Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585)
+> _**NOTE:** A
+> [post in the Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585)
 > mentions, for timing reasons, the 13-bit pattern takes 14 cycles to execute._
 
-### Command Sequence
+#### Command Bytes
 
 - [`0xAB`] CALIBRATE_MOTORS
 - [`0xEB`] TEST_LED
@@ -54,7 +61,7 @@ line from light or partial commands.
 - [`0xBE`] ARMS_CLOSE
 - [`0xEE`] ARMS_OPEN
 
-### Binary Testing Signal
+### Test Signal
 
 In a
 [video of the Gyromite TEST mode](https://www.youtube.com/watch?v=fThtTzKbqyY),
@@ -62,11 +69,11 @@ the LED on R.O.B.'s head can be observed blinking on and off without engaging
 the motors. This led to the discovery of an additional input sequence. The test
 screen flashes a continuous, alternating binary stream (e.g. `101010101010...`).
 
-At the time of writing, the binary testing signal is the only way known to
-disable the LED. However, the behavior resulting from this signal is more
-complicated than simply disabling the LED.
+At the time of writing, the test signal is the only way known to disable the
+LED. However, the behavior resulting from this signal is more complicated than
+simply disabling the LED.
 
-**Observed Behaviors:**
+**Observed Behavior:**
 
 - `10` issued 10 times (or `10101010101010101010`) was discovered to be the most
 reliable way to elicit a response from R.O.B. _(responses have been observed
@@ -78,23 +85,22 @@ regardless of the starting position.
 - When the signal is issued constantly the light will blink at a regular
 interval, as seen in the Gyromite test screen video.
 
-**Signal Tests:**
+**Signal Response:**
 
-![Binary test signal issued continuously.](img/binary-test-signal-continuous.png)
-_Binary test signal issued continuously._
+![Test signal issued continuously.](img/test-signal-continuous.png)
+_Test signal issued continuously._
 
-![Binary test signal issued intermittently.](img/binary-test-signal-intermittent.png)
-_Binary test signal issued intermittently._
+![Test signal issued intermittently.](img/test-signal-intermittent.png)
+_Test signal issued intermittently._
 
-![Alternating `TEST_LED` and binary test signal issued continuously.](img/test-led-binary-test-signal-alternating-continuous.png)
-_Alternating `TEST_LED` and binary test signal issued continuously._
+![Alternating `TEST_LED` and test signal issued continuously.](img/test-led-test-signal-alternating-continuous.png)
+_Alternating `TEST_LED` and test signal issued continuously._
 
-![Alternating `TEST_LED` and binary test signal issued intermittently.](img/test-led-binary-test-signal-alternating-intermittent.png)
-_Alternating `TEST_LED` and binary test signal issued intermittently._
+![Alternating `TEST_LED` and test signal issued intermittently.](img/test-led-test-signal-alternating-intermittent.png)
+_Alternating `TEST_LED` and test signal issued intermittently._
 
 > _**NOTE:** For completeness, the command sequence `0xAA` was tested, due to
-it's similarity to the binary testing signal, but it was discovered to have no
-effect._
+it's similarity to the test signal, but it was discovered to have no effect._
 
 Wired Signals
 -------------
@@ -142,10 +148,7 @@ the following:
   LED is lit until R.O.B. receives a command. When a command is accepted, the
   light will turn off as the motors engage, and remain off for the duration of
   the command execution. Once the motors have stopped, the LED will turn on,
-  indicating R.O.B. is ready to process the next instruction\*.
-
-  \*Observation confirmed by
-  [Gyromite manual](img/nintendo-manual-gyromite-1985.pdf).
+  indicating R.O.B. is ready to process the next instruction.
 
 ### Protocol
 
