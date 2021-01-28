@@ -54,6 +54,48 @@ line from light or partial commands.
 - [`0xBE`] ARMS_CLOSE
 - [`0xEE`] ARMS_OPEN
 
+### Binary Testing Signal
+
+In a
+[video of the Gyromite TEST mode](https://www.youtube.com/watch?v=fThtTzKbqyY),
+the LED on R.O.B.'s head can be observed blinking on and off without engaging
+the motors. This led to the discovery of an additional input sequence. The test
+screen flashes a continuous, alternating binary stream (e.g. `101010101010...`).
+
+At the time of writing, the binary testing signal is the only way known to
+disable the LED. However, the behavior resulting from this signal is more
+complicated than simply disabling the LED.
+
+**Observed Behaviors:**
+
+- `10` issued 10 times (or `10101010101010101010`) was discovered to be the most
+reliable way to elicit a response from R.O.B. _(responses have been observed
+with less iterations, but the response is sporadic at best)_.
+- If the LED starts `OFF`, it will flash `ON` for ~264ms, and turn `OFF` again.
+- If the LED starts `ON`, it will turn `OFF` immediately.
+- If the signal is accepted, the LED will always end in the `OFF` position;
+regardless of the starting position.
+- When the signal is issued constantly the light will blink at a regular
+interval, as seen in the Gyromite test screen video.
+
+**Signal Tests:**
+
+![Binary test signal issued continuously.](img/binary-test-signal-continuous.png)
+_Binary test signal issued continuously._
+
+![Binary test signal issued intermittently.](img/binary-test-signal-intermittent.png)
+_Binary test signal issued intermittently._
+
+![Alternating `TEST_LED` and binary test signal issued continuously.](img/led-test-binary-test-signal-alternating-continuous.png)
+_Alternating `TEST_LED` and binary test signal issued continuously._
+
+![Alternating `TEST_LED` and binary test signal issued intermittently.](img/led-test-binary-test-signal-alternating-intermittent.png)
+_Alternating `TEST_LED` and binary test signal issued intermittently._
+
+> _**NOTE:** For completeness, the command sequence `0xAA` was tested, due to
+it's similarity to the binary testing signal, but it was discovered to have no
+effect._
+
 Wired Signals
 -------------
 
@@ -114,10 +156,10 @@ environment.
 Only the first part is required to manipulate R.O.B., so we shall focus our
 effort on deciphering that portion of the transmission.
 
-Observations:
+**Observations:**
 
 - On first signal, the signal line appears to be pulled low at ~156ms
-(immediately following motor engagement).
+(a.k.a. immediately following motor engagement).
 - Before LED is enabled, the signal line is pulled low, LED is enabled, and the
 signal is released after 600-800us.
 
