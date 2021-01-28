@@ -142,7 +142,10 @@ the following:
   LED is lit until R.O.B. receives a command. When a command is accepted, the
   light will turn off as the motors engage, and remain off for the duration of
   the command execution. Once the motors have stopped, the LED will turn on,
-  indicating R.O.B. is ready to process the next instruction.
+  indicating R.O.B. is ready to process the next instruction\*.
+
+  \*Observation confirmed by
+  [Gyromite manual](img/nintendo-manual-gyromite-1985.pdf).
 
 ### Protocol
 
@@ -228,5 +231,7 @@ Additional Resources
 - [Adafruit: Controlling a Classic Nintendo R.O.B. Robot Using Circuit Playground Express](https://learn.adafruit.com/controlling-a-classic-nintendo-r-o-b-robot-using-circuit-playground-express/overview)
 - [Atari Age Forum: Any interest in NES ROB homebrews?](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/)
 - [GitHub: NES R.O.B. Control Library](https://github.com/zfields/nes-rob)
+- [Nintendo Manual: Gyromite (1985)](img/nintendo-manual-gyromite-1985.pdf)
+- [Nintendo Manual: Stack-Up (1985)](img/nintendo-manual-stack-up-1985.pdf)
 - [Tindie: Bluetooth Control Goggles for R.O.B. Nintendo](https://www.tindie.com/products/cxelectronics/bluetooth-control-goggles-for-rob-nintendo/)
 - [Wikipedia: R.O.B.](https://en.wikipedia.org/wiki/R.O.B.)
