@@ -86,10 +86,10 @@ _Binary test signal issued continuously._
 ![Binary test signal issued intermittently.](img/binary-test-signal-intermittent.png)
 _Binary test signal issued intermittently._
 
-![Alternating `TEST_LED` and binary test signal issued continuously.](img/led-test-binary-test-signal-alternating-continuous.png)
+![Alternating `TEST_LED` and binary test signal issued continuously.](img/test-led-binary-test-signal-alternating-continuous.png)
 _Alternating `TEST_LED` and binary test signal issued continuously._
 
-![Alternating `TEST_LED` and binary test signal issued intermittently.](img/led-test-binary-test-signal-alternating-intermittent.png)
+![Alternating `TEST_LED` and binary test signal issued intermittently.](img/test-led-binary-test-signal-alternating-intermittent.png)
 _Alternating `TEST_LED` and binary test signal issued intermittently._
 
 > _**NOTE:** For completeness, the command sequence `0xAA` was tested, due to
