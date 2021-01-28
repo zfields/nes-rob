@@ -1,15 +1,16 @@
 #ifndef LED_NTSC_DRIVER_HPP
 #define LED_NTSC_DRIVER_HPP
 
-#include "signal_driver.hpp"
+#include "pulse_driver.hpp"
 
 class HalClock;
 class HalGpio;
 
-class LedNtscDriver final : public SignalDriver {
+class LedNtscDriver final : public PulseDriver {
   public:
   LedNtscDriver (const HalClock * clock, const HalGpio * gpio, unsigned int pin);
-  int pulse (unsigned int active_) const override;
+  ErrorCode init (void * params) override;
+  ErrorCode pulse (unsigned int active) const override;
 
   private:
   const HalClock * const _clock;

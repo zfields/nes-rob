@@ -3,6 +3,8 @@
 
 class HalGpio {
   public:
+    // Implementation specific inputs to the interface
+    // Values must be defined in the concrete implementation
     static const int PIN_STATE_HIGH;
     static const int PIN_MODE_INPUT;
     static const int PIN_MODE_INPUT_PULLUP;

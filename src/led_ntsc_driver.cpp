@@ -11,23 +11,56 @@ LedNtscDriver::LedNtscDriver (
     _clock(clock_),
     _gpio(gpio_),
     _pin(pin_)
-{
-    _gpio->pinMode(_pin, HalGpio::PIN_MODE_OUTPUT);
-    _gpio->digitalWrite(_pin, HalGpio::PIN_STATE_LOW);
+{ }
+
+LedNtscDriver::ErrorCode
+LedNtscDriver::init (
+    void * params_
+) {
+    ErrorCode result;
+
+    // Ignore parameters
+    (void)params_;
+
+    // Configure the HAL GPIO
+    if (_gpio->pinMode(_pin, HalGpio::PIN_MODE_OUTPUT)) {
+        result = ErrorCode::E_HAL_FAIL;
+    } else if (_gpio->digitalWrite(_pin, HalGpio::PIN_STATE_LOW)) {
+        result = ErrorCode::E_HAL_FAIL;
+    } else {
+        result = ErrorCode::SUCCESS;
+    }
+
+    return result;
 }
 
-int
+LedNtscDriver::ErrorCode
 LedNtscDriver::pulse (
     unsigned int active_
 ) const {
+    ErrorCode result;
+
     if (active_) {
-        _gpio->digitalWrite(_pin, HalGpio::PIN_STATE_HIGH);
-        _clock->delayMicroseconds(1500);
-        _gpio->digitalWrite(_pin, HalGpio::PIN_STATE_LOW);
-        _clock->delayMicroseconds(15166);
+        if (_gpio->digitalWrite(_pin, HalGpio::PIN_STATE_HIGH)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else if (_clock->delayMicroseconds(1500)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else if (_gpio->digitalWrite(_pin, HalGpio::PIN_STATE_LOW)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else if (_clock->delayMicroseconds(15166)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else {
+            result = ErrorCode::SUCCESS;
+        }
     } else {
-        _clock->delayMicroseconds(16666);
+        if (_gpio->digitalWrite(_pin, HalGpio::PIN_STATE_LOW)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else if (_clock->delayMicroseconds(16666)) {
+            result = ErrorCode::E_HAL_FAIL;
+        } else {
+            result = ErrorCode::SUCCESS;
+        }
     }
 
-    return 0;
+    return result;
 }

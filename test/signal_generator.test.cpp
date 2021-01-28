@@ -2,7 +2,7 @@
 #include <catch2/catch.hpp>
 #include <fakeit.hpp>
 
-// Compile Command: g++ signal_generator.test.cpp ../src/signal_generator.cpp  -I Catch2/single_include/ -I../src/ -I FakeIt/single_header/catch/
+// Compile Command: g++ signal_generator.test.cpp ../src/signal_generator.cpp -I../src/ -I Catch2/single_include/ -I FakeIt/single_header/catch/
 
 #include "signal_driver.hpp"
 #include "signal_generator.hpp"
