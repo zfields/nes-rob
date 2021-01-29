@@ -1,7 +1,7 @@
 R.O.B. Reverse Engineered
 =========================
 
-Reverse Engineering the Robot Operating Buddy, by Nintendo.
+Reverse Engineering the Nintendo Robot Operating Buddy (#NES-012).
 
 As you may have observed, it is not possible to use the R.O.B. with a Nintendo
 Entertainment System connected to a liquid crystal diode (LCD) television. The
@@ -46,7 +46,8 @@ line from light or partial commands.
 
 > _**NOTE:** A
 > [post in the Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585)
-> mentions, for timing reasons, the 13-bit pattern takes 14 cycles to execute._
+> explains, the 13-bit pattern takes 14 cycles to execute in order to achieve
+> proper timing._
 
 #### Command Bytes
 
@@ -138,7 +139,7 @@ the following:
 
 - [`V`] Power (`Vcc`)
 
-  Constant 6VDC
+  ~6VDC supplied directly from the 4 (AA) batteries.
 
 - [`L`] LED
 
@@ -217,14 +218,30 @@ signal is released after 600-800us.
 
   ![Arms Open Protocol Timing Graph](img/protocol-arms-open.png)
 
+Physical Characteristics
+------------------------
+
+| Dimensions        | Value | Unit |
+|------------------:|:-----:|:----:|
+| Height            |   9.5 |  in  |
+| Width (Base)      |   6   |  in  |
+| Weight            |   1.46| lbs  |
+
+| Range of Motion   | Value | Unit |
+|------------------:|:-----:|:----:|
+| Arms Left/Right   | 300   | deg  |
+| Arms Up/Down      |   2.75|  in  |
+| Arms Open/Close   |   2.75|  in  |
+| Head Tilt Up/Down |  45   | deg  |
+
 Power Characteristics
 ---------------------
 
 |                     | Value | Unit |
 |--------------------:|:-----:|:----:|
-| Operating Voltage   |     6 |   V  |
-| Idle Current        |    19 |  mA  |
-| Start-Up Current    |   700 |  mA  |
+| Operating Voltage   |   6   |   V  |
+| Idle Current        |  19   |  mA  |
+| Start-Up Current    | 700   |  mA  |
 | Logic Level Voltage |   6   |   V  |
 | LED Voltage         |   1.9 |   V  |
 
@@ -236,5 +253,6 @@ Additional Resources
 - [GitHub: NES R.O.B. Control Library](https://github.com/zfields/nes-rob)
 - [Nintendo Manual: Gyromite (1985)](img/nintendo-manual-gyromite-1985.pdf)
 - [Nintendo Manual: Stack-Up (1985)](img/nintendo-manual-stack-up-1985.pdf)
+- [Robots and Computers: #NES-012 by Nintendo](http://www.robotsandcomputers.com/robots/nrob.htm)
 - [Tindie: Bluetooth Control Goggles for R.O.B. Nintendo](https://www.tindie.com/products/cxelectronics/bluetooth-control-goggles-for-rob-nintendo/)
 - [Wikipedia: R.O.B.](https://en.wikipedia.org/wiki/R.O.B.)
