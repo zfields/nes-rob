@@ -3,6 +3,8 @@ R.O.B. Reverse Engineered
 
 Reverse Engineering the Nintendo Robot Operating Buddy (#NES-012).
 
+![Gyromite Manual Depiction of NES R.O.B.](img/nes-rob.png)
+
 As you may have observed, it is not possible to use the R.O.B. with a Nintendo
 Entertainment System connected to a liquid crystal diode (LCD) television. The
 reason being, the detection chip in its head requires the specific flash timing
