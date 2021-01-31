@@ -14,6 +14,12 @@ Command List:
 
   Runs the startup calibration routine.
 
+- `LED_DISABLE`
+
+  Disables the LED on top of R.O.B.'s head.
+
+  > _**NOTE:** Not idempotent. Enables LED to disable, if previously disabled._
+
 - `LED_ENABLE`
 
   Enables the LED on top of R.O.B.'s head.

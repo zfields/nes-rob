@@ -102,8 +102,10 @@ _Alternating `LED_ENABLE` and test signal issued continuously._
 ![Alternating `LED_ENABLE` and test signal issued intermittently.](img/led-enable-test-signal-alternating-intermittent.png)
 _Alternating `LED_ENABLE` and test signal issued intermittently._
 
-> _**NOTE:** For completeness, the command sequence `0xAA` was tested, due to
-it's similarity to the test signal, but it was discovered to have no effect._
+For completeness, the command sequence `0xAA` was tested, due to it's similarity
+to the test signal, but it was discovered to have no effect (shown below).
+
+![0xAA passed in protocol format, when LED is both on and off.](img/protocol-test-aa.png)
 
 Wired Signals
 -------------

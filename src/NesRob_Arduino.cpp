@@ -34,8 +34,10 @@ NesRob::sendCommand (
     Command command_
 ) const {
     ErrorCode result;
-
-    if (_signal_generator->signal(static_cast<int>(command_))) {
+    if ((Command::LED_DISABLE == command_)
+        ? _signal_generator->testSignal()
+        : _signal_generator->signal(static_cast<int>(command_))
+    ) {
         result = ErrorCode::E_SIGGEN;
     } else {
         result = ErrorCode::SUCCESS;

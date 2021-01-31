@@ -13,6 +13,7 @@ class SignalGenerator {
     SignalGenerator (PulseDriver * driver);
     int init (void * params);
     int signal (int sequence) const;
+    int testSignal (void) const;
 
   private:
     PulseDriver * const _driver;

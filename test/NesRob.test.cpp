@@ -1,12 +1,13 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 
-// Compile Command: g++ NesRob.test.cpp -I../src/ -I Catch2/single_include/
+// Compile Command: g++ NesRob.test.cpp -I ../src/ -I Catch2/single_include/
 
 #include "NesRob.h"
 
 TEST_CASE("Command Enum Class Verification", "[commands]") {
     CHECK(static_cast<int>(NesRob::Command::CALIBRATE_MOTORS) == 0xAB);
+    CHECK(static_cast<int>(NesRob::Command::LED_DISABLE) == 0xAA);
     CHECK(static_cast<int>(NesRob::Command::LED_ENABLE) == 0xEB);
     CHECK(static_cast<int>(NesRob::Command::ARMS_LEFT) == 0xBA);
     CHECK(static_cast<int>(NesRob::Command::ARMS_RIGHT) == 0xEA);

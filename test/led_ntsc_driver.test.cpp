@@ -2,7 +2,7 @@
 #include <catch2/catch.hpp>
 #include <fakeit.hpp>
 
-// Compile Command: g++ led_ntsc_driver.test.cpp ../src/led_ntsc_driver.cpp -I../src/ -I Catch2/single_include/ -I FakeIt/single_header/catch/
+// Compile Command: g++ led_ntsc_driver.test.cpp ../src/led_ntsc_driver.cpp -I ../src/ -I Catch2/single_include/ -I FakeIt/single_header/catch/
 
 #include "hardware_abstraction_layer.hpp"
 #include "led_ntsc_driver.hpp"

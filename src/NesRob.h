@@ -16,6 +16,7 @@ class NesRob {
 
   enum class Command : uint8_t {
     CALIBRATE_MOTORS = 0xAB,
+    LED_DISABLE = 0xAA,
     LED_ENABLE = 0xEB,
     ARMS_LEFT = 0xBA,
     ARMS_RIGHT = 0xEA,
