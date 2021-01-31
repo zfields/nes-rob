@@ -1,15 +1,21 @@
 #ifndef SIGNAL_GENERATOR_HPP
 #define SIGNAL_GENERATOR_HPP
 
-class SignalDriver;
+class PulseDriver;
 
 class SignalGenerator {
   public:
-    SignalGenerator (const SignalDriver * driver);
+    enum class ErrorCode : int {
+        SUCCESS,  // Executed as expected
+        E_DRIVER, // Driver Error
+    };
+
+    SignalGenerator (PulseDriver * driver);
+    int init (void * params);
     int signal (int sequence) const;
 
   private:
-    const SignalDriver * const _driver;
+    PulseDriver * const _driver;
 };
 
 #endif // SIGNAL_GENERATOR_HPP

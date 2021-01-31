@@ -1,12 +1,29 @@
 #include "signal_generator.hpp"
 
-#include "signal_driver.hpp"
+#include "pulse_driver.hpp"
 
 SignalGenerator::SignalGenerator (
-    const SignalDriver * driver_
+    PulseDriver * driver_
 ) :
     _driver(driver_)
 { }
+
+int
+SignalGenerator::init (
+    void * params_
+) {
+    ErrorCode result;
+
+    (void)params_;  // ignore parameters
+
+    if (_driver->init(nullptr)) {
+        result = ErrorCode::E_DRIVER;
+    } else {
+        result = ErrorCode::SUCCESS;
+    }
+
+    return static_cast<int>(result);
+}
 
 int
 SignalGenerator::signal (

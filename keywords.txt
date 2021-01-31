@@ -9,8 +9,9 @@
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-sendCommand			KEYWORD2
 Command			KEYWORD2
+ErrorCode			KEYWORD2
+sendCommand			KEYWORD2
 
 #######################################
 # Structures (KEYWORD3)
@@ -31,3 +32,6 @@ ARMS_RAISE			LITERAL1
 ARMS_RAISE_2			LITERAL1
 ARMS_CLOSE			LITERAL1
 ARMS_OPEN			LITERAL1
+
+SUCCESS			LITERAL1
+E_SIGGEN			LITERAL1

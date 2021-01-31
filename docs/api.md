@@ -58,6 +58,21 @@ Command List:
 
   Spreads R.O.B.'s hands apart.
 
+### `ErrorCode` (enum class)
+
+The `ErrorCode` enum class identifies the error codes returned by the `NesRob`
+library implementation.
+
+ErrorCode List:
+
+- `SUCCESS`
+
+  The command executed as expected.
+
+- `E_SIGGEN`
+
+  An error occured during signal generation.
+
 Methods
 -------
 
@@ -127,7 +142,8 @@ int NesRob::sendCommand(NesRob::Command);
 
 An `int`, describing the result of the command.
 
-- `0` - Success: The command executed as expected.
+- `ErrorCode::SUCCESS` (`0`) - The command executed as expected.
+- `ErrorCode::E_SIGGEN` - Signal generator failed unexpectedly.
 
 **Example:**
 

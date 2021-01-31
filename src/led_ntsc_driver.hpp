@@ -3,18 +3,16 @@
 
 #include "pulse_driver.hpp"
 
-class HalClock;
-class HalGpio;
+class HardwareAbstractionLayer;
 
 class LedNtscDriver final : public PulseDriver {
   public:
-  LedNtscDriver (const HalClock * clock, const HalGpio * gpio, unsigned int pin);
-  ErrorCode init (void * params) override;
-  ErrorCode pulse (unsigned int active) const override;
+  LedNtscDriver (HardwareAbstractionLayer * hal, unsigned int pin);
+  int init (void * params) override;
+  int pulse (unsigned int active) const override;
 
   private:
-  const HalClock * const _clock;
-  const HalGpio * const _gpio;
+  HardwareAbstractionLayer * const _hal;
   const unsigned int _pin;
 };
 

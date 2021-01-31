@@ -7,30 +7,39 @@
 NesRob::NesRob (
     unsigned int pin_
 ) :
-    _hal_clock(new HalArduino()),
-    _hal_gpio(reinterpret_cast<const HalArduino *>(_hal_clock)),
-    _sig_drv(new LedNtscDriver(_hal_clock, _hal_gpio, pin_)),
-    _sig_gen(new SignalGenerator(_sig_drv))
-{ }
+    _hal(new HalArduino()),
+    _pulse_driver(new LedNtscDriver(_hal, pin_)),
+    _signal_generator(new SignalGenerator(_pulse_driver))
+{
+    _signal_generator->init(nullptr);
+}
 
 NesRob::~NesRob (
     void
 ) {
-    delete reinterpret_cast<const HalArduino *>(_hal_clock);
-    delete _sig_drv;
-    delete _sig_gen;
+    delete _hal;
+    delete _pulse_driver;
+    delete _signal_generator;
 }
 
 void
 NesRob::blinkCommand (
     Command command_
-) {
-    _sig_gen->signal(static_cast<int>(command_));
+) const {
+    _signal_generator->signal(static_cast<int>(command_));
 }
 
 int
 NesRob::sendCommand (
     Command command_
-) {
-    return _sig_gen->signal(static_cast<int>(command_));
+) const {
+    ErrorCode result;
+
+    if (_signal_generator->signal(static_cast<int>(command_))) {
+        result = ErrorCode::E_SIGGEN;
+    } else {
+        result = ErrorCode::SUCCESS;
+    }
+
+    return static_cast<int>(result);
 }
