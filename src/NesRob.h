@@ -16,7 +16,7 @@ class NesRob {
 
   enum class Command : uint8_t {
     CALIBRATE_MOTORS = 0xAB,
-    TEST_LED = 0xEB,
+    LED_ENABLE = 0xEB,
     ARMS_LEFT = 0xBA,
     ARMS_RIGHT = 0xEA,
     ARMS_LOWER = 0xAE,
@@ -26,9 +26,11 @@ class NesRob {
     ARMS_CLOSE = 0xBE,
     ARMS_OPEN = 0xEE,
 #if __cplusplus > 201103L
+    TEST_LED [[deprecated("Use LED_ENABLE instead.")]] = 0xEB,
     HANDS_CLOSE [[deprecated("Use ARMS_CLOSE instead.")]] = 0xBE,
     HANDS_OPEN [[deprecated("Use ARMS_OPEN instead.")]] = 0xEE,
 #else
+    TEST_LED = 0xEB,
     HANDS_CLOSE = 0xBE,
     HANDS_OPEN = 0xEE,
 #endif

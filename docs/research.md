@@ -54,7 +54,7 @@ line from light or partial commands.
 #### Command Bytes
 
 - [`0xAB`] CALIBRATE_MOTORS
-- [`0xEB`] TEST_LED
+- [`0xEB`] LED_ENABLE
 - [`0xBA`] ARMS_LEFT
 - [`0xEA`] ARMS_RIGHT
 - [`0xAE`] ARMS_LOWER
@@ -69,7 +69,7 @@ line from light or partial commands.
 In a
 [video of the Gyromite TEST mode](https://www.youtube.com/watch?v=fThtTzKbqyY),
 the LED on R.O.B.'s head can be observed blinking on and off without engaging
-the motors. This led to the discovery of an additional input sequence. The test
+the motors. This led to the discovery of an additional input sequence. The TEST
 screen flashes a continuous, alternating binary stream (e.g. `101010101010...`).
 
 At the time of writing, the test signal is the only way known to disable the
@@ -86,7 +86,7 @@ with less iterations, but the response is sporadic at best)_.
 - If the signal is accepted, the LED will always end in the `OFF` position;
 regardless of the starting position.
 - When the signal is issued constantly the light will blink at a regular
-interval, as seen in the Gyromite test screen video.
+interval, as seen in the Gyromite TEST screen video.
 
 **Signal Response:**
 
@@ -96,11 +96,11 @@ _Test signal issued continuously._
 ![Test signal issued intermittently.](img/test-signal-intermittent.png)
 _Test signal issued intermittently._
 
-![Alternating `TEST_LED` and test signal issued continuously.](img/test-led-test-signal-alternating-continuous.png)
-_Alternating `TEST_LED` and test signal issued continuously._
+![Alternating `LED_ENABLE` and test signal issued continuously.](img/led-enable-test-signal-alternating-continuous.png)
+_Alternating `LED_ENABLE` and test signal issued continuously._
 
-![Alternating `TEST_LED` and test signal issued intermittently.](img/test-led-test-signal-alternating-intermittent.png)
-_Alternating `TEST_LED` and test signal issued intermittently._
+![Alternating `LED_ENABLE` and test signal issued intermittently.](img/led-enable-test-signal-alternating-intermittent.png)
+_Alternating `LED_ENABLE` and test signal issued intermittently._
 
 > _**NOTE:** For completeness, the command sequence `0xAA` was tested, due to
 it's similarity to the test signal, but it was discovered to have no effect._
@@ -184,9 +184,9 @@ signal is released after 600-800us.
 
   ![Calibrate Motors Protocol Timing Graph](img/protocol-calibrate-motors.png)
 
-- TEST_LED
+- LED_ENABLE
 
-  ![Test LED Protocol Timing Graph](img/protocol-test-led.png)
+  ![LED Enable Protocol Timing Graph](img/protocol-led-enable.png)
 
 - ARMS_LEFT
 

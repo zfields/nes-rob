@@ -14,7 +14,11 @@ Command List:
 
   Runs the startup calibration routine.
 
-- `TEST_LED`
+- `LED_ENABLE`
+
+  Enables the LED on top of R.O.B.'s head.
+
+- `TEST_LED` **[Deprecated]**
 
   Turns on the LED on top of R.O.B.'s head.
 
@@ -46,7 +50,7 @@ Command List:
 
   Brings R.O.B.'s arms together.
 
-- `HANDS_CLOSE` [Deprecated]
+- `HANDS_CLOSE` **[Deprecated]**
 
   Brings R.O.B.'s hands together.
 
@@ -54,7 +58,7 @@ Command List:
 
   Spreads R.O.B.'s arms apart.
 
-- `HANDS_OPEN` [Deprecated]
+- `HANDS_OPEN` **[Deprecated]**
 
   Spreads R.O.B.'s hands apart.
 
