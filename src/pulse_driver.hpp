@@ -4,8 +4,11 @@
 class PulseDriver {
   public:
     enum class ErrorCode : int {
-        SUCCESS,    // Executed as expected
-        E_HAL_FAIL, // Internal HAL failure
+        SUCCESS,        // Executed as expected
+        E_HAL_INIT,     // Failed to initialize HAL
+        E_HAL_CLOCK,    // HAL clock failure
+        E_HAL_GPIO,     // HAL GPIO failure
+        E_HAL_GPIO_CFG, // HAL GPIO configuration error
     };
     virtual ~PulseDriver (void) { };
     virtual int init (void * params) = 0;
