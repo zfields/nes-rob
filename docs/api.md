@@ -73,6 +73,10 @@ ErrorCode List:
 
   An error occured during signal generation.
 
+- `E_SIGGEN_INIT`
+
+  An error occured during the initialization of the signal generator.
+
 Methods
 -------
 
@@ -96,6 +100,44 @@ NesRob::NesRob(unsigned int);
 #include <NesRob.h>
 
 NesRob rob;
+```
+
+### `begin(void *)`
+
+Initialize the NesRob object.
+
+> _**NOTE:** This method MUST be called before the library can be used._
+
+**Signature:**
+
+```cpp
+int NesRob::begin(void *);
+```
+
+**Parameters:**
+
+- _params_: The parameters required to initialize the library (**default:**
+`nullptr`).
+
+**Returns:**
+
+An `int`, describing the result of the command.
+
+- `ErrorCode::SUCCESS` (`0`) - The command executed as expected.
+- `ErrorCode::E_SIGGEN_INIT` - Failed to initialize the signal generator.
+
+**Example:**
+
+```cpp
+#include <NesRob.h>
+
+NesRob rob;
+
+void setup() {
+  rob.begin();
+}
+
+...
 ```
 
 ### `blinkCommand(Command)` [deprecated]

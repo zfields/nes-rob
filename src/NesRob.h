@@ -10,8 +10,9 @@ class HardwareAbstractionLayer;
 class NesRob {
   public:
   enum class ErrorCode : int {
-      SUCCESS = 0, // Executed as expected
-      E_SIGGEN,    // Signal generation error
+      SUCCESS = 0,   // Executed as expected
+      E_SIGGEN,      // Signal Error
+      E_SIGGEN_INIT, // Failed to initialize signal generator
   };
 
   enum class Command : uint8_t {
@@ -40,6 +41,11 @@ class NesRob {
 
   ~NesRob (
     void
+  );
+
+  int
+  begin (
+    void * params = nullptr
   );
 
 #if __cplusplus > 201103L

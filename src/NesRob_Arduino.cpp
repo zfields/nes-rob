@@ -22,6 +22,13 @@ NesRob::~NesRob (
     delete _signal_generator;
 }
 
+int
+NesRob::begin (
+    void * params_
+) {
+    return _signal_generator->init(nullptr);
+}
+
 void
 NesRob::blinkCommand (
     Command command_

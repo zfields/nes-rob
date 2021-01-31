@@ -19,7 +19,9 @@ To use this library:
 
 NesRob rob;
 
-void setup() { }
+void setup() {
+  rob.begin();
+}
 
 void loop() {
   rob.sendCommand(NesRob::Command::ARMS_CLOSE);
