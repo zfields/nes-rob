@@ -1,7 +1,7 @@
 #ifndef NES_ROB_H
 #define NES_ROB_H
 
-#include <cstdint>
+#include <stdint.h>
 
 class PulseDriver;
 class SignalGenerator;
@@ -9,11 +9,6 @@ class HardwareAbstractionLayer;
 
 class NesRob {
   public:
-  enum class ErrorCode : int {
-      SUCCESS = 0, // Executed as expected
-      E_SIGGEN,    // Signal generation error
-  };
-
   enum class Command : uint8_t {
     CALIBRATE_MOTORS = 0xAB,
     LED_DISABLE = 0xAA,
@@ -37,8 +32,19 @@ class NesRob {
 #endif
   };
 
+  enum class CommandTarget {
+      PHOTOSENSOR,
+      MAIN_CPU,
+  };
+
+  enum class ErrorCode : int {
+      SUCCESS = 0, // Executed as expected
+      E_SIGGEN,    // Signal generation error
+  };
+
   NesRob (
-    unsigned int _pin
+    unsigned int pin,
+    CommandTarget target = CommandTarget::PHOTOSENSOR
   );
 
   ~NesRob (

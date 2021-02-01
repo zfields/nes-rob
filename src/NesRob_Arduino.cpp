@@ -3,12 +3,17 @@
 #include "hal_arduino.hpp"
 #include "led_ntsc_driver.hpp"
 #include "signal_generator.hpp"
+#include "w_wave_driver.hpp"
 
 NesRob::NesRob (
-    unsigned int pin_
+    unsigned int pin_,
+    CommandTarget target_
 ) :
     _hal(new HalArduino()),
-    _pulse_driver(new LedNtscDriver(_hal, pin_)),
+    _pulse_driver(CommandTarget::PHOTOSENSOR == target_
+        ? reinterpret_cast<PulseDriver *>(new LedNtscDriver(_hal, pin_))
+        : reinterpret_cast<PulseDriver *>(new WWaveDriver(_hal, pin_))
+    ),
     _signal_generator(new SignalGenerator(_pulse_driver))
 {
     _signal_generator->init(nullptr);

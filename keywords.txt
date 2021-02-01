@@ -11,6 +11,7 @@
 #######################################
 Command			KEYWORD2
 ErrorCode			KEYWORD2
+CommandTarget			KEYWORD2
 sendCommand			KEYWORD2
 
 #######################################
@@ -36,3 +37,6 @@ ARMS_OPEN			LITERAL1
 
 SUCCESS			LITERAL1
 E_SIGGEN			LITERAL1
+
+PHOTOSENSOR			LITERAL1
+MAIN_CPU			LITERAL1

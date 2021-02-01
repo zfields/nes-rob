@@ -6,7 +6,7 @@ Definitions
 
 ### `Command` (enum class)
 
-The `Command` enum class specified which movements are available to R.O.B.
+The `Command` enum class specifies which movements are available to R.O.B.
 
 Command List:
 
@@ -27,6 +27,8 @@ Command List:
 - `TEST_LED` **[Deprecated]**
 
   Turns on the LED on top of R.O.B.'s head.
+
+  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
 
 - `ARMS_LEFT`
 
@@ -60,6 +62,8 @@ Command List:
 
   Brings R.O.B.'s hands together.
 
+  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
+
 - `ARMS_OPEN`
 
   Spreads R.O.B.'s arms apart.
@@ -67,6 +71,29 @@ Command List:
 - `HANDS_OPEN` **[Deprecated]**
 
   Spreads R.O.B.'s hands apart.
+
+  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
+
+### `CommandTarget` (enum class)
+
+The `CommandTarget` enum class specifies which targets are available to R.O.B.
+to receive [`Commands`](#command-enum-class).
+
+CommandTarget List:
+
+- `PHOTOSENSOR`
+
+  Targets the photosensor in R.O.B.'s left eye, by flashing an LED in accordance
+  with the NTSC standard.
+
+- `MAIN_CPU`
+
+  Targets the Main CPU on R.O.B.'s motherboard. Generates a signal, using the
+  same square wave transform as the optical electronics in R.O.B. head.
+
+  > _**NOTE:**  This requires hardware modification to utilize. The signal
+  > should be injected inline with the ribbon cable, running down R.O.B.'s neck
+  > from his head to the base._
 
 ### `ErrorCode` (enum class)
 
@@ -86,29 +113,31 @@ ErrorCode List:
 Methods
 -------
 
-### `NesRob(unsigned int)` (constructor)
+### `NesRob` _(constructor)_
 
 Requires a pin number argument to creates the NesRob instance.
 
 **Signature:**
 
 ```cpp
-NesRob::NesRob(unsigned int);
+NesRob::NesRob(unsigned int, NesRob::CommandTarget);
 ```
 
 **Parameters:**
 
 - _pin_: the pin used to drive the LED
+- _target_: the target for generated instructions [**default:**
+`NesRob::CommandTarget::PHOTOSENSOR`]
 
 **Example:**
 
 ```cpp
 #include <NesRob.h>
 
-NesRob rob;
+NesRob rob(LED_BUILTIN, NesRob::CommandTarget::PHOTOSENSOR);
 ```
 
-### `blinkCommand(Command)` [deprecated]
+### `blinkCommand` [deprecated]
 
 Manipulates R.O.B. by blinking the signal related to the `Command` provided to
 the API.
@@ -123,7 +152,7 @@ void NesRob::blinkCommand(NesRob::Command);
 
 - _command_: a bit array used to indicate the flash pattern
 
-> _**NOTE:** This API was deprecated in v1.1.0, and is no longer supported._
+> _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
 
 **Returns:**
 
@@ -131,9 +160,9 @@ Nothing
 
 **See also:**
 
-- [`sendCommand`](#sendcommand\(command\))
+- [`sendCommand`](#sendcommand)
 
-### `sendCommand(Command)`
+### `sendCommand`
 
 Manipulates R.O.B. by blinking the signal related to the `Command` provided to
 the API.

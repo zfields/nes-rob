@@ -39,22 +39,30 @@ LedNtscDriver::pulse (
     ErrorCode result;
 
     if (active_) {
+        // Enable LED
         if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_HIGH)) {
             result = ErrorCode::E_HAL_GPIO;
         } else if (_hal->delayMicroseconds(1500)) {
             result = ErrorCode::E_HAL_CLOCK;
+
+        // Disable LED
         } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
             result = ErrorCode::E_HAL_GPIO;
         } else if (_hal->delayMicroseconds(15166)) {
             result = ErrorCode::E_HAL_CLOCK;
+
+        // NTSC pulse generated successfully
         } else {
             result = ErrorCode::SUCCESS;
         }
     } else {
+        // Disable LED
         if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
             result = ErrorCode::E_HAL_GPIO;
         } else if (_hal->delayMicroseconds(16666)) {
             result = ErrorCode::E_HAL_CLOCK;
+
+        // NTSC blank generated successfully
         } else {
             result = ErrorCode::SUCCESS;
         }

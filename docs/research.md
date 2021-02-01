@@ -103,7 +103,7 @@ _Alternating `LED_ENABLE` and test signal issued continuously._
 _Alternating `LED_ENABLE` and test signal issued intermittently._
 
 For completeness, the command sequence `0xAA` was tested, due to it's similarity
-to the test signal, but it was discovered to have no effect (shown below).
+to the test signal, but it was discovered to have no effect (as shown below).
 
 ![0xAA passed in protocol format, when LED is both on and off.](img/protocol-test-aa.png)
 
@@ -255,6 +255,7 @@ Additional Resources
 - [Adafruit: Controlling a Classic Nintendo R.O.B. Robot Using Circuit Playground Express](https://learn.adafruit.com/controlling-a-classic-nintendo-r-o-b-robot-using-circuit-playground-express/overview)
 - [Atari Age Forum: Any interest in NES ROB homebrews?](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/)
 - [GitHub: NES R.O.B. Control Library](https://github.com/zfields/nes-rob)
+- [NesDev: R.O.B. Firmware](https://forums.nesdev.com/viewtopic.php?p=244701)
 - [Nintendo Manual: Gyromite (1985)](img/nintendo-manual-gyromite-1985.pdf)
 - [Nintendo Manual: Stack-Up (1985)](img/nintendo-manual-stack-up-1985.pdf)
 - [Robots and Computers: #NES-012 by Nintendo](http://www.robotsandcomputers.com/robots/nrob.htm)
