@@ -10,25 +10,15 @@ The `Command` enum class specifies which movements are available to R.O.B.
 
 Command List:
 
-- `CALIBRATE_MOTORS`
+- `CALIBRATE`
 
   Runs the startup calibration routine.
 
-- `LED_DISABLE`
+- `CALIBRATE_MOTORS` **[Deprecated]**
 
-  Disables the LED on top of R.O.B.'s head.
+  Runs the startup calibration routine.
 
-  > _**NOTE:** Not idempotent. Enables LED to disable, if previously disabled._
-
-- `LED_ENABLE`
-
-  Enables the LED on top of R.O.B.'s head.
-
-- `TEST_LED` **[Deprecated]**
-
-  Turns on the LED on top of R.O.B.'s head.
-
-  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
 
 - `ARMS_LEFT`
 
@@ -62,7 +52,7 @@ Command List:
 
   Brings R.O.B.'s hands together.
 
-  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
 
 - `ARMS_OPEN`
 
@@ -72,7 +62,23 @@ Command List:
 
   Spreads R.O.B.'s hands apart.
 
-  > _**WARNING:** This API was deprecated in v1.1.0, and is no longer supported._
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `LED_DISABLE`
+
+  Disables the LED on top of R.O.B.'s head.
+
+  > _**NOTE:** Not idempotent. Enables LED to disable, if previously disabled._
+
+- `LED_ENABLE`
+
+  Enables the LED on top of R.O.B.'s head.
+
+- `TEST_LED` **[Deprecated]**
+
+  Turns on the LED on top of R.O.B.'s head.
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
 
 ### `CommandTarget` (enum class)
 

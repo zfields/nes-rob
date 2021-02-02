@@ -53,8 +53,7 @@ line from light or partial commands.
 
 #### Command Bytes
 
-- [`0xAB`] CALIBRATE_MOTORS
-- [`0xEB`] LED_ENABLE
+- [`0xAB`] CALIBRATE
 - [`0xBA`] ARMS_LEFT
 - [`0xEA`] ARMS_RIGHT
 - [`0xAE`] ARMS_LOWER
@@ -63,6 +62,7 @@ line from light or partial commands.
 - [`0xBB`] ARMS_RAISE_2
 - [`0xBE`] ARMS_CLOSE
 - [`0xEE`] ARMS_OPEN
+- [`0xEB`] LED_ENABLE
 
 ### Test Signal
 
@@ -182,9 +182,9 @@ signal is released after 600-800us.
 
 #### Command Timing
 
-- CALIBRATE_MOTORS
+- CALIBRATE
 
-  ![Calibrate Motors Protocol Timing Graph](img/protocol-calibrate-motors.png)
+  ![Calibrate Protocol Timing Graph](img/protocol-calibrate.png)
 
 - LED_ENABLE
 
