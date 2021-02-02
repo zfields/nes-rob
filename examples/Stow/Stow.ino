@@ -1,10 +1,14 @@
 /*
-  Blink R.O.B.'s LED
+  Prepare R.O.B. for storage in his original packaging
 
   Turns on and off a light emitting diode (LED) connected to LED_BUILTIN, which
   sends control signals to the NES R.O.B. When the LED signal is viewed by
-  R.O.B., the LED on R.O.B.'s head will turn on for one second, then off for one
-  second, repeatedly. R.O.B.'s response validates your hardware configuration.
+  R.O.B., the calibration routine will execute and R.O.B. will return to the
+  position required to fit inside the styrofoam mold of the original packaging.
+
+  This sketch relies on timing delays to know when R.O.B. has finished executing
+  each command, before submitting any subsequent commands. R.O.B.'s response
+  validates your hardware configuration.
 
   The circuit:
   - Use the onboard LED (may require a brighter LED if the room is too bright).
@@ -27,13 +31,18 @@
 NesRob rob(LED_BUILTIN);
 
 void setup() {
-  // put your setup code here, to run once:
-
+  rob.sendCommand(NesRob::Command::CALIBRATE);
+  ::delay(11500);  // wait for 11.5 seconds
+  rob.sendCommand(NesRob::Command::ARMS_LOWER_2);
+  ::delay(3500);  // wait for 3.5 seconds
+  rob.sendCommand(NesRob::Command::ARMS_LOWER_2);
+  ::delay(3500);  // wait for 3.5 seconds
+  rob.sendCommand(NesRob::Command::ARMS_LOWER);
+  ::delay(2500);  // wait for 2.5 seconds
+  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
 }
 
 void loop() {
-  rob.sendCommand(NesRob::Command::LED_ENABLE);
-  ::delay(1000);  // wait for a second
-  rob.sendCommand(NesRob::Command::LED_DISABLE);
-  ::delay(1000);  // wait for a second
+  // put your main code here, to run repeatedly:
+
 }
