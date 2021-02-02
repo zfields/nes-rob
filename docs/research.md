@@ -227,16 +227,25 @@ Physical Characteristics
 
 | Dimensions        | Value | Unit |
 |------------------:|:-----:|:----:|
-| Height            |   9.5 |  in  |
-| Width (Base)      |   6   |  in  |
-| Weight            |   1.46| lbs  |
+| Height            |  230  |  cm  |
+| Width (Arms)      |  180  |  cm  |
+| Width (Base)      |  155  |  cm  |
+| Sweep Area        |  270  |  cm  |
+| Weight            |  675  |  gm  |
 
 | Range of Motion   | Value | Unit |
 |------------------:|:-----:|:----:|
-| Arms Left/Right   | 300   | deg  |
-| Arms Up/Down      |   2.75|  in  |
-| Arms Open/Close   |   2.75|  in  |
-| Head Tilt Up/Down |  45   | deg  |
+| Arms Open/Closed  |   72  |  cm  |
+| Arms Left/Right   |  240  | deg  |
+| Arms Up/Down      |   75  |  cm  |
+| Head Tilt Up/Down |   45  | deg  |
+
+| Movement Details  | Positions | Description                                             |
+|:------------------|:---------:|:--------------------------------------------------------|
+| Arms Open/Closed  |     2     | Closed, Open                                            |
+| Arms Left/Right   |     5     | 1 - 5 (labeled clockwise), 60&deg; between each station |
+| Arms Up/Down      |     6     | 15cm between each station                               |
+| Head Tilt Up/Down |     -     | No motors, requires manual placement                    |
 
 Power Characteristics
 ---------------------
