@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 
-// Compile Command: g++ NesRob.test.cpp -I ../src/ -I Catch2/single_include/
+// Compile Command: g++ NesRob.test.cpp -Wall -Wpedantic -I ../src/ -I Catch2/single_include/
 
 #include "NesRob.h"
 

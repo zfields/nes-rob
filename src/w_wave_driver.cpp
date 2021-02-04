@@ -18,7 +18,7 @@ WWaveDriver::init (
 
     (void)params_;  // ignore parameters
 
-    // Configure the HAL
+    // Configure the HAL (high-impedence)
     if (_hal->init(nullptr)) {
         result = ErrorCode::E_HAL_INIT;
     } else if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_INPUT)) {
@@ -39,7 +39,7 @@ WWaveDriver::pulse (
     if (active_) {
         // Sink current for 800us (~4us of MCU instructions)
         if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_OUTPUT)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = ErrorCode::E_HAL_GPIO_CFG;
         } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
             result = ErrorCode::E_HAL_GPIO;
         } else if (_hal->delayMicroseconds(796)) {
@@ -47,14 +47,14 @@ WWaveDriver::pulse (
 
         // High-Z for 733us (~3us of MCU instructions)
         } else if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_INPUT)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = ErrorCode::E_HAL_GPIO_CFG;
         } else if (_hal->delayMicroseconds(730)) {
             result = ErrorCode::E_HAL_CLOCK;
 
 
         // Sink current for 800us (~4us of MCU instructions)
         } else if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_OUTPUT)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = ErrorCode::E_HAL_GPIO_CFG;
         } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
             result = ErrorCode::E_HAL_GPIO;
         } else if (_hal->delayMicroseconds(796)) {
@@ -62,7 +62,7 @@ WWaveDriver::pulse (
 
         // High-Z for remaining time slice (~3us of MCU instructions)
         } else if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_INPUT)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = ErrorCode::E_HAL_GPIO_CFG;
         } else if (_hal->delayMicroseconds(14330)) {
             result = ErrorCode::E_HAL_CLOCK;
 
@@ -73,7 +73,7 @@ WWaveDriver::pulse (
     } else {
         // High-Z for time slice (~3us of MCU instructions)
         if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_INPUT)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = ErrorCode::E_HAL_GPIO_CFG;
         } else if (_hal->delayMicroseconds(16663)) {
             result = ErrorCode::E_HAL_CLOCK;
 
