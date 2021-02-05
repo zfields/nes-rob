@@ -47,7 +47,14 @@ TEST_CASE("init() returns `SUCCESS`, when no errors occur", "[init][error]") {
     CHECK(SignalGenerator::ErrorCode::SUCCESS == static_cast<SignalGenerator::ErrorCode>(result));
 }
 
-TEST_CASE("Sequences are 8 bits, prefixed with a 5-bit initialization sequence", "[signal][preamble]") {
+/*
+ * "The loop to execute the command has 14 cycles. The first cycle does
+ * absolutely nothing except wait for the right time for the first flash to
+ * occur (see the above loop). Then the next 13 cycles go through the sequence
+ * for the desired command." --x87bliss
+ * https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585
+ */
+TEST_CASE("Sequences consist of a synchronizing frame, a 5-bit preamble, and an 8-bit command.", "[signal][sync][preamble][sequence]") {
     // Setup
     fakeit::Mock<PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
@@ -57,11 +64,11 @@ TEST_CASE("Sequences are 8 bits, prefixed with a 5-bit initialization sequence",
     sig_gen.signal(0xAA);
 
     // Evalulate Result
-    fakeit::Verify(Method(mock_driver,pulse)).Exactly(13);
+    fakeit::Verify(Method(mock_driver,pulse)).Exactly(14);
     CHECK(true);
 }
 
-TEST_CASE("5-bit initialization sequence is `00010`", "[signal][preamble]") {
+TEST_CASE("The sychronizing frame shall be observed as a zero-pulse", "[signal][sync]") {
     // Setup
     fakeit::Mock<PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
@@ -71,7 +78,21 @@ TEST_CASE("5-bit initialization sequence is `00010`", "[signal][preamble]") {
     sig_gen.signal(0x17);
 
     // Evalulate Result
-    fakeit::Verify((Method(mock_driver,pulse).Using(0) * 3) + Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0) + (Method(mock_driver,pulse).Using(fakeit::_) * 8)).Once();
+    fakeit::Verify(Method(mock_driver,pulse).Using(0) + (Method(mock_driver,pulse).Using(fakeit::_) * 5) + (Method(mock_driver,pulse).Using(fakeit::_) * 8)).Once();
+    CHECK(true);
+}
+
+TEST_CASE("5-bit initialization sequence and is `00010`", "[signal][preamble]") {
+    // Setup
+    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(0);
+    SignalGenerator sig_gen(&mock_driver.get());
+
+    // Action
+    sig_gen.signal(0x17);
+
+    // Evalulate Result
+    fakeit::Verify(Method(mock_driver,pulse).Using(fakeit::_) + (Method(mock_driver,pulse).Using(0) * 3) + Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0) + (Method(mock_driver,pulse).Using(fakeit::_) * 8)).Once();
     CHECK(true);
 }
 
@@ -85,7 +106,7 @@ TEST_CASE("Sequences matches sequence parameter", "[signal][sequence]") {
     sig_gen.signal(0xAA);
 
     // Evalulate Result
-    fakeit::Verify((Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
+    fakeit::Verify(Method(mock_driver,pulse).Using(fakeit::_) + (Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
     CHECK(true);
 }
 
@@ -99,7 +120,7 @@ TEST_CASE("Sequences longer than 8 bits will only use the bottom 8-bits", "[sign
     sig_gen.signal(0xCC55FFAA);
 
     // Evalulate Result
-    fakeit::Verify((Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
+    fakeit::Verify(Method(mock_driver,pulse).Using(fakeit::_) + (Method(mock_driver,pulse).Using(fakeit::_) * 5) + ((Method(mock_driver,pulse).Using(1) + Method(mock_driver,pulse).Using(0)) * 4)).Once();
     CHECK(true);
 }
 

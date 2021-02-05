@@ -30,7 +30,7 @@ SignalGenerator::signal (
     int sequence_
 ) const {
     ErrorCode result;
-    const unsigned int preamble[] = {0,0,0,1,0};
+    const unsigned int preamble[] = {0,0,0,0,1,0};
     bool halt = false;
 
     // Pulse initialization sequence

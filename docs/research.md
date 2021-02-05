@@ -46,10 +46,13 @@ bits of the preamble ensure enough space has passed between successive commands,
 which allows the command pattern to be distinguished from noise on the signal
 line from light or partial commands.
 
-> _**NOTE:** A
-> [post in the Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585)
-> explains, the 13-bit pattern takes 14 cycles to execute in order to achieve
-> proper timing._
+A
+[post in the Atari Age Forums](https://atariage.com/forums/topic/177286-any-interest-in-nes-rob-homebrews/?tab=comments#comment-2258585)
+explains, the 13-bit pattern takes 14 cycles to execute in order to achieve
+proper timing. The need for this requirement was observed when using the (L)ED
+line as a interrupt signal, to indicate R.O.B. was ready to process subsequent
+commands. To accomodate the sychronization cycle, an additional off bit should
+be prefixed to the preamble.
 
 #### Command Bytes
 
