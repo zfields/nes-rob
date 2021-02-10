@@ -31,7 +31,7 @@
 NesRob rob(LED_BUILTIN);
 
 void setup() {
-  rob.sendCommand(NesRob::Command::CALIBRATE);
+  rob.sendCommand(NesRob::Command::RECALIBRATE);
   ::delay(11500);  // wait for 11.5 seconds
   rob.sendCommand(NesRob::Command::ARMS_LOWER_2);
   ::delay(3500);  // wait for 3.5 seconds

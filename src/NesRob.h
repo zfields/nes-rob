@@ -18,11 +18,11 @@ class NesRob {
     ARMS_RAISE_2 = 0xBB,
     ARMS_CLOSE = 0xBE,
     ARMS_OPEN = 0xEE,
-    CALIBRATE = 0xAB,
     LED_DISABLE = 0xAA,
     LED_ENABLE = 0xEB,
+    RECALIBRATE = 0xAB,
 #if __cplusplus > 201103L
-    CALIBRATE_MOTORS [[deprecated("Use CALIBRATE instead.")]] = 0xAB,
+    CALIBRATE_MOTORS [[deprecated("Use RECALIBRATE instead.")]] = 0xAB,
     HANDS_CLOSE [[deprecated("Use ARMS_CLOSE instead.")]] = 0xBE,
     HANDS_OPEN [[deprecated("Use ARMS_OPEN instead.")]] = 0xEE,
     TEST_LED [[deprecated("Use LED_ENABLE instead.")]] = 0xEB,

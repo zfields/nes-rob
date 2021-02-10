@@ -14,7 +14,7 @@ TEST_CASE("Command Enum Class Verification", "[commands]") {
     CHECK(static_cast<int>(NesRob::Command::ARMS_RAISE_2) == 0xBB);
     CHECK(static_cast<int>(NesRob::Command::ARMS_CLOSE) == 0xBE);
     CHECK(static_cast<int>(NesRob::Command::ARMS_OPEN) == 0xEE);
-    CHECK(static_cast<int>(NesRob::Command::CALIBRATE) == 0xAB);
     CHECK(static_cast<int>(NesRob::Command::LED_DISABLE) == 0xAA);
     CHECK(static_cast<int>(NesRob::Command::LED_ENABLE) == 0xEB);
+    CHECK(static_cast<int>(NesRob::Command::RECALIBRATE) == 0xAB);
 }

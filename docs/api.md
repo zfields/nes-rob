@@ -10,16 +10,6 @@ The `Command` enum class specifies which movements are available to R.O.B.
 
 Command List:
 
-- `CALIBRATE`
-
-  Runs the startup calibration routine.
-
-- `CALIBRATE_MOTORS` **[Deprecated]**
-
-  Runs the startup calibration routine.
-
-  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
-
 - `ARMS_LEFT`
 
   Turn R.O.B.'s torso to the left one station [1,5].
@@ -77,6 +67,16 @@ Command List:
 - `TEST_LED` **[Deprecated]**
 
   Turns on the LED on top of R.O.B.'s head.
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `RECALIBRATE`
+
+  Reruns the startup calibration routine.
+
+- `CALIBRATE_MOTORS` **[Deprecated]**
+
+  Runs the startup calibration routine.
 
   > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
 

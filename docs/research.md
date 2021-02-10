@@ -56,7 +56,6 @@ be prefixed to the preamble.
 
 #### Command Bytes
 
-- [`0xAB`] CALIBRATE
 - [`0xBA`] ARMS_LEFT
 - [`0xEA`] ARMS_RIGHT
 - [`0xAE`] ARMS_LOWER
@@ -66,6 +65,7 @@ be prefixed to the preamble.
 - [`0xBE`] ARMS_CLOSE
 - [`0xEE`] ARMS_OPEN
 - [`0xEB`] LED_ENABLE
+- [`0xAB`] RECALIBRATE
 
 ### Test Signal
 
@@ -185,14 +185,6 @@ signal is released after 600-800us.
 
 #### Command Timing
 
-- CALIBRATE
-
-  ![Calibrate Protocol Timing Graph](img/protocol-calibrate.png)
-
-- LED_ENABLE
-
-  ![LED Enable Protocol Timing Graph](img/protocol-led-enable.png)
-
 - ARMS_LEFT
 
   ![Arms Left Protocol Timing Graph](img/protocol-arms-left.png)
@@ -224,6 +216,14 @@ signal is released after 600-800us.
 - ARMS_OPEN
 
   ![Arms Open Protocol Timing Graph](img/protocol-arms-open.png)
+
+- LED_ENABLE
+
+  ![LED Enable Protocol Timing Graph](img/protocol-led-enable.png)
+
+- RECALIBRATE
+
+  ![Recalibrate Protocol Timing Graph](img/protocol-recalibrate.png)
 
 Physical Characteristics
 ------------------------
