@@ -31,7 +31,7 @@ void
 NesRob::blinkCommand (
     Command command_
 ) const {
-    _signal_generator->signal(static_cast<int>(command_));
+    sendCommand(command_);
 }
 
 int
