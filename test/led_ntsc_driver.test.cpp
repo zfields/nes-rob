@@ -1,4 +1,7 @@
+#ifndef RUN_ALL_TESTS
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#endif
+
 #include <catch2/catch.hpp>
 #include <fakeit.hpp>
 
@@ -7,13 +10,13 @@
 #include "hardware_abstraction_layer.hpp"
 #include "led_ntsc_driver.hpp"
 
-const int HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
-const int HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
-const int HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
-const int HardwareAbstractionLayer::PIN_STATE_LOW = 40;
-const int HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
+__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
+__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
+__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
+__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_LOW = 40;
+__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
 
-TEST_CASE("HardwareAbstractionLayer::init() is invoked during init()", "[init][hal]") {
+TEST_CASE("HardwareAbstractionLayer::init() is invoked during LedNtscDriver::init()", "[init][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -31,7 +34,7 @@ TEST_CASE("HardwareAbstractionLayer::init() is invoked during init()", "[init][h
     CHECK(true);
 }
 
-TEST_CASE("Pin provided to constructor is set to HardwareAbstractionLayer::PIN_MODE_OUTPUT during init()", "[constructor][init][hal][pin_mode]") {
+TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::PIN_MODE_OUTPUT during LedNtscDriver::init()", "[constructor][init][hal][pin_mode]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -50,7 +53,7 @@ TEST_CASE("Pin provided to constructor is set to HardwareAbstractionLayer::PIN_M
     CHECK(true);
 }
 
-TEST_CASE("Pin provided to constructor is set to HardwareAbstractionLayer::PIN_STATE_LOW during init()", "[constructor][init][hal][pin_state]") {
+TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::PIN_STATE_LOW during LedNtscDriver::init()", "[constructor][init][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -69,7 +72,7 @@ TEST_CASE("Pin provided to constructor is set to HardwareAbstractionLayer::PIN_S
     CHECK(true);
 }
 
-TEST_CASE("init() returns `E_HAL_INIT`, when HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
+TEST_CASE("LedNtscDriver::init() returns `E_HAL_INIT`, when HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -86,7 +89,7 @@ TEST_CASE("init() returns `E_HAL_INIT`, when HardwareAbstractionLayer::init() re
     CHECK(PulseDriver::ErrorCode::E_HAL_INIT == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("init() will stop processing if HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
+TEST_CASE("LedNtscDriver::init() will stop processing if HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -105,7 +108,7 @@ TEST_CASE("init() will stop processing if HardwareAbstractionLayer::init() retur
     CHECK(true);
 }
 
-TEST_CASE("init() returns `E_HAL_GPIO_CFG`, when pinMode() returns an error", "[init][hal][pin_mode][error]") {
+TEST_CASE("LedNtscDriver::init() returns `E_HAL_GPIO_CFG`, when pinMode() returns an error", "[init][hal][pin_mode][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -122,7 +125,7 @@ TEST_CASE("init() returns `E_HAL_GPIO_CFG`, when pinMode() returns an error", "[
     CHECK(PulseDriver::ErrorCode::E_HAL_GPIO_CFG == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("init() will stop processing if pinMode() returns an error", "[init][hal][error]") {
+TEST_CASE("LedNtscDriver::init() will stop processing if pinMode() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -141,7 +144,7 @@ TEST_CASE("init() will stop processing if pinMode() returns an error", "[init][h
     CHECK(true);
 }
 
-TEST_CASE("init() returns `E_HAL_GPIO`, when digitalWrite() returns an error", "[init][hal][pin_state][error]") {
+TEST_CASE("LedNtscDriver::init() returns `E_HAL_GPIO`, when digitalWrite() returns an error", "[init][hal][pin_state][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -158,7 +161,7 @@ TEST_CASE("init() returns `E_HAL_GPIO`, when digitalWrite() returns an error", "
     CHECK(PulseDriver::ErrorCode::E_HAL_GPIO == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("init() will stop processing if digitalWrite() returns an error", "[init][hal][error]") {
+TEST_CASE("LedNtscDriver::init() will stop processing if digitalWrite() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -177,7 +180,7 @@ TEST_CASE("init() will stop processing if digitalWrite() returns an error", "[in
     CHECK(true);
 }
 
-TEST_CASE("init() returns `SUCCESS`, when no errors occur", "[init][error]") {
+TEST_CASE("LedNtscDriver::init() returns `SUCCESS`, when no errors occur", "[init][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -194,7 +197,7 @@ TEST_CASE("init() returns `SUCCESS`, when no errors occur", "[init][error]") {
     CHECK(PulseDriver::ErrorCode::SUCCESS == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("Pin provided to constructor is supplied to HAL interface when pulse() is called with a non-zero value", "[constructor][pulse][hal]") {
+TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when LedNtscDriver::pulse() is called with a non-zero value", "[constructor][pulse][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -212,7 +215,7 @@ TEST_CASE("Pin provided to constructor is supplied to HAL interface when pulse()
     CHECK(true);
 }
 
-TEST_CASE("Pin provided to constructor is supplied to HAL interface when pulse() is called with a zero value", "[constructor][pulse][hal]") {
+TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when LedNtscDriver::pulse() is called with a zero value", "[constructor][pulse][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -229,7 +232,7 @@ TEST_CASE("Pin provided to constructor is supplied to HAL interface when pulse()
     CHECK(true);
 }
 
-TEST_CASE("pulse() generates NTSC compatible pulse when called with a non-zero value", "[pulse][hal][pin_state]") {
+TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible pulse when called with a non-zero value", "[pulse][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -247,7 +250,7 @@ TEST_CASE("pulse() generates NTSC compatible pulse when called with a non-zero v
     CHECK(true);
 }
 
-TEST_CASE("pulse() generates NTSC compatible blank called with a zero value", "[pulse][hal][pin_state]") {
+TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible blank called with a zero value", "[pulse][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -265,7 +268,7 @@ TEST_CASE("pulse() generates NTSC compatible blank called with a zero value", "[
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_GPIO`, when first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `E_HAL_GPIO`, when first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -281,7 +284,7 @@ TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_GPIO`, when firs
     CHECK(PulseDriver::ErrorCode::E_HAL_GPIO == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a non-zero value, will stop processing if the first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -299,7 +302,7 @@ TEST_CASE("pulse() called with a non-zero value, will stop processing if the fir
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_GPIO`, when second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `E_HAL_GPIO`, when second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -315,7 +318,7 @@ TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_GPIO`, when seco
     CHECK(PulseDriver::ErrorCode::E_HAL_GPIO == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a non-zero value, will stop processing if the second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -333,7 +336,7 @@ TEST_CASE("pulse() called with a non-zero value, will stop processing if the sec
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a zero value, returns `E_HAL_GPIO`, when digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `E_HAL_GPIO`, when digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -349,7 +352,7 @@ TEST_CASE("pulse() called with a zero value, returns `E_HAL_GPIO`, when digitalW
     CHECK(PulseDriver::ErrorCode::E_HAL_GPIO == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a zero value, will stop processing if digitalWrite() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing if digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -367,7 +370,7 @@ TEST_CASE("pulse() called with a zero value, will stop processing if digitalWrit
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -383,7 +386,7 @@ TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when fir
     CHECK(PulseDriver::ErrorCode::E_HAL_CLOCK == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a non-zero value, will stop processing if the first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -401,7 +404,7 @@ TEST_CASE("pulse() called with a non-zero value, will stop processing if the fir
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -417,7 +420,7 @@ TEST_CASE("pulse() called with a non-zero value, returns `E_HAL_CLOCK`, when sec
     CHECK(PulseDriver::ErrorCode::E_HAL_CLOCK == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a non-zero value, will stop processing if the second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -435,7 +438,7 @@ TEST_CASE("pulse() called with a non-zero value, will stop processing if the sec
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a zero value, returns `E_HAL_CLOCK`, when delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `E_HAL_CLOCK`, when delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -451,7 +454,7 @@ TEST_CASE("pulse() called with a zero value, returns `E_HAL_CLOCK`, when delayMi
     CHECK(PulseDriver::ErrorCode::E_HAL_CLOCK == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a zero value, will stop processing if delayMicroseconds() returns an error", "[pulse][hal][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing if delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -469,7 +472,7 @@ TEST_CASE("pulse() called with a zero value, will stop processing if delayMicros
     CHECK(true);
 }
 
-TEST_CASE("pulse() called with a non-zero value, returns `SUCCESS`, when no errors occur", "[pulse][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `SUCCESS`, when no errors occur", "[pulse][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
@@ -485,7 +488,7 @@ TEST_CASE("pulse() called with a non-zero value, returns `SUCCESS`, when no erro
     CHECK(PulseDriver::ErrorCode::SUCCESS == static_cast<PulseDriver::ErrorCode>(result));
 }
 
-TEST_CASE("pulse() called with a zero value, returns `SUCCESS`, when no errors occur", "[pulse][error]") {
+TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `SUCCESS`, when no errors occur", "[pulse][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
     fakeit::Mock<HardwareAbstractionLayer> mock_hal;
