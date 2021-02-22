@@ -3,9 +3,10 @@
 #include <Arduino.h>
 
 #include "hardware_abstraction_layer.hpp"
+#include "pulse_driver_error.hpp"
 
 //TODO: Abstract this from Arduino
-int
+std::error_code
 ArduinoDebugDriver::init (
     void * params_
 ) {
@@ -29,17 +30,17 @@ ArduinoDebugDriver::init (
     Serial.print("PIN_STATE_LOW: ");
     Serial.println(HardwareAbstractionLayer::PIN_STATE_LOW, DEC);
 
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return nes::rob::pulse_driver_error::success;
 }
 
-int
+std::error_code
 ArduinoDebugDriver::pulse (
     unsigned int active_
 ) const {
     if (active_) {
-        Serial.println("ACTIVE");
+        Serial.println("PULSE");
     } else {
-        Serial.println("passive");
+        Serial.println("rest");
     }
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return nes::rob::pulse_driver_error::success;
 }

@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 
+#include "hal_error.hpp"
+
 namespace
 {
     // Max delay of 16383 guaranteed to be accurate by Arduino reference
@@ -9,7 +11,7 @@ namespace
     static const unsigned int MAX_DELAY_MICROSECONDS = 16383;
 } // namespace
 
-int
+std::error_code
 HalArduino::delayMicroseconds (
     unsigned int us_
 ) const {
@@ -18,33 +20,33 @@ HalArduino::delayMicroseconds (
         ::delayMicroseconds(MAX_DELAY_MICROSECONDS);
     }
     ::delayMicroseconds(us_);
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return make_error_code(nes::rob::hal_error::success);
 }
 
-int
+std::error_code
 HalArduino::digitalWrite (
     unsigned int pin_,
     int state_
 ) const {
     ::digitalWrite(pin_,state_);
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return make_error_code(nes::rob::hal_error::success);
 }
 
-int
+std::error_code
 HalArduino::init (
     void * params_
 ) {
     (void)params_; // ignore parameter
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return make_error_code(nes::rob::hal_error::success);
 }
 
-int
+std::error_code
 HalArduino::pinMode (
     unsigned int pin_,
     int mode_
 ) const {
     ::pinMode(pin_,mode_);
-    return static_cast<int>(ErrorCode::SUCCESS);
+    return make_error_code(nes::rob::hal_error::success);
 }
 
 const int HardwareAbstractionLayer::PIN_STATE_HIGH = HIGH;

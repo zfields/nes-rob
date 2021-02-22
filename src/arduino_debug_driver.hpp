@@ -5,8 +5,8 @@
 
 class ArduinoDebugDriver final : public PulseDriver {
   public:
-  int init (void * params);
-  int pulse (unsigned int active) const override;
+    std::error_code init (void * params);
+    std::error_code pulse (unsigned int active) const override;
 };
 
 #endif // ARDUINO_PRINT_DRIVER_HPP

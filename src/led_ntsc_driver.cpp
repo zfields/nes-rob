@@ -1,6 +1,7 @@
 #include "led_ntsc_driver.hpp"
 
 #include "hardware_abstraction_layer.hpp"
+#include "pulse_driver_error.hpp"
 
 LedNtscDriver::LedNtscDriver (
     HardwareAbstractionLayer * hal_,
@@ -10,63 +11,63 @@ LedNtscDriver::LedNtscDriver (
     _pin(pin_)
 { }
 
-int
+std::error_code
 LedNtscDriver::init (
     void * params_
 ) {
-    ErrorCode result;
+    std::error_code result;
 
     (void)params_;  // ignore parameters
 
     // Configure the HAL
     if (_hal->init(nullptr)) {
-        result = ErrorCode::E_HAL_INIT;
+        result = make_error_code(nes::rob::pulse_driver_error::hal_init);
     } else if (_hal->pinMode(_pin, HardwareAbstractionLayer::PIN_MODE_OUTPUT)) {
-        result = ErrorCode::E_HAL_GPIO_CFG;
+        result = make_error_code(nes::rob::pulse_driver_error::hal_gpio_config);
     } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
-        result = ErrorCode::E_HAL_GPIO;
+        result = make_error_code(nes::rob::pulse_driver_error::hal_gpio_state);
     } else {
-        result = ErrorCode::SUCCESS;
+        result = make_error_code(nes::rob::pulse_driver_error::success);
     }
 
-    return static_cast<int>(result);
+    return result;
 }
 
-int
+std::error_code
 LedNtscDriver::pulse (
     unsigned int active_
 ) const {
-    ErrorCode result;
+    std::error_code result;
 
     if (active_) {
         // Enable LED
         if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_HIGH)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_gpio_state);
         } else if (_hal->delayMicroseconds(1500)) {
-            result = ErrorCode::E_HAL_CLOCK;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_clock);
 
         // Disable LED
         } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_gpio_state);
         } else if (_hal->delayMicroseconds(15166)) {
-            result = ErrorCode::E_HAL_CLOCK;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_clock);
 
         // NTSC pulse generated successfully
         } else {
-            result = ErrorCode::SUCCESS;
+            result = make_error_code(nes::rob::pulse_driver_error::success);
         }
     } else {
         // Disable LED
         if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
-            result = ErrorCode::E_HAL_GPIO;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_gpio_state);
         } else if (_hal->delayMicroseconds(16666)) {
-            result = ErrorCode::E_HAL_CLOCK;
+            result = make_error_code(nes::rob::pulse_driver_error::hal_clock);
 
         // NTSC blank generated successfully
         } else {
-            result = ErrorCode::SUCCESS;
+            result = make_error_code(nes::rob::pulse_driver_error::success);
         }
     }
 
-    return static_cast<int>(result);
+    return result;
 }
