@@ -6,6 +6,8 @@ System Robot Operating Buddy (R.O.B.). The hardware configuration needed to
 control R.O.B. requires the placement of an LED in front of the left eye. The
 LED should be controlled by the microcontroller using this library.
 
+![Gyromite Manual Depiction of NES R.O.B.](img/nes-rob.png)
+
 The `NesRob` library simplies the interaction with the NES R.O.B., by handling
 the precision timing and command processing necessary to control R.O.B. The end
 user can simply choose an LED pin, then supply any of R.O.B.'s available actions
