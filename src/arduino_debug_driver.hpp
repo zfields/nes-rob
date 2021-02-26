@@ -3,6 +3,8 @@
 
 #include "pulse_driver.hpp"
 
+namespace nes { namespace rob {
+
 class ArduinoDebugDriver final : public PulseDriver {
   public:
     std::error_code init (void * params);
@@ -10,3 +12,5 @@ class ArduinoDebugDriver final : public PulseDriver {
 };
 
 #endif // ARDUINO_PRINT_DRIVER_HPP
+
+}} // namespace nes::rob

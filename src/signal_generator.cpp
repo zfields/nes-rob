@@ -3,6 +3,8 @@
 #include "pulse_driver.hpp"
 #include "signal_generator_error.hpp"
 
+using namespace nes::rob;
+
 SignalGenerator::SignalGenerator (
     PulseDriver * driver_
 ) :
@@ -18,9 +20,9 @@ SignalGenerator::init (
     (void)params_;  // ignore parameters
 
     if (_driver->init(nullptr)) {
-        result = make_error_code(nes::rob::signal_generator_error::driver_init);
+        result = make_error_code(signal_generator_error::driver_init);
     } else {
-        result = make_error_code(nes::rob::signal_generator_error::success);
+        result = make_error_code(signal_generator_error::success);
     }
 
     return result;
@@ -37,7 +39,7 @@ SignalGenerator::signal (
     // Pulse initialization sequence
     for (unsigned int i = 0 ; i < (sizeof(preamble)/sizeof(unsigned int)) ; ++i) {
         if (_driver->pulse(preamble[i])) {
-            result = make_error_code(nes::rob::signal_generator_error::driver_error);
+            result = make_error_code(signal_generator_error::driver_error);
             halt = true;
             break;
         }
@@ -48,10 +50,10 @@ SignalGenerator::signal (
         for (int i = 7 ; i >= 0 ; --i) {
             unsigned int active = ((static_cast<unsigned int>(sequence_) >> i) & static_cast<unsigned int>(0x1));
             if (_driver->pulse(active)) {
-                result = make_error_code(nes::rob::signal_generator_error::driver_error);
+                result = make_error_code(signal_generator_error::driver_error);
                 break;
             }
-            result = make_error_code(nes::rob::signal_generator_error::success);
+            result = make_error_code(signal_generator_error::success);
         }
     }
 
@@ -69,10 +71,10 @@ SignalGenerator::testSignal (
     // Test signal sequence
     for (unsigned int i = 0 ; i < (sizeof(test_signal)/sizeof(unsigned int)) ; ++i) {
         if (_driver->pulse(test_signal[i])) {
-            result = make_error_code(nes::rob::signal_generator_error::driver_error);
+            result = make_error_code(signal_generator_error::driver_error);
             break;
         }
-        result = make_error_code(nes::rob::signal_generator_error::success);
+        result = make_error_code(signal_generator_error::success);
     }
 
     return result;

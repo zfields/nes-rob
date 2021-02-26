@@ -3,6 +3,8 @@
 
 #include <system_error>
 
+namespace nes { namespace rob {
+
 class HardwareAbstractionLayer {
   public:
     // Implementation specific inputs to the interface
@@ -19,5 +21,7 @@ class HardwareAbstractionLayer {
     virtual std::error_code digitalWrite (unsigned int pin, int state) const = 0;
     virtual std::error_code pinMode (unsigned int pin, int mode) const = 0;
 };
+
+}} // namespace nes::rob
 
 #endif // HARDWARE_ABSTRACTION_LAYER_HPP

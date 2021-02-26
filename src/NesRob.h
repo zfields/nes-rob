@@ -3,9 +3,13 @@
 
 #include <stdint.h>
 
+namespace nes { namespace rob {
+
 class PulseDriver;
 class SignalGenerator;
 class HardwareAbstractionLayer;
+
+}} // namespace nes::rob
 
 class NesRob {
   public:
@@ -55,9 +59,9 @@ class NesRob {
     int sendCommand(Command command) const;
 
   private:
-    HardwareAbstractionLayer * const _hal;
-    PulseDriver * const _pulse_driver;
-    SignalGenerator * const _signal_generator;
+    nes::rob::HardwareAbstractionLayer * const _hal;
+    nes::rob::PulseDriver * const _pulse_driver;
+    nes::rob::SignalGenerator * const _signal_generator;
 };
 
 #endif // NES_ROB_H

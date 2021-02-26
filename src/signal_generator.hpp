@@ -3,6 +3,8 @@
 
 #include <system_error>
 
+namespace nes { namespace rob {
+
 class PulseDriver;
 
 class SignalGenerator {
@@ -15,5 +17,7 @@ class SignalGenerator {
   private:
     PulseDriver * const _driver;
 };
+
+}} // namespace nes::rob
 
 #endif // SIGNAL_GENERATOR_HPP

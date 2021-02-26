@@ -12,19 +12,19 @@
 #include "pulse_driver_error.hpp"
 #include "w_wave_driver.hpp"
 
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_LOW = 40;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW = 40;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
 
 TEST_CASE("HardwareAbstractionLayer::init() is invoked during WWaveDriver::init()", "[init][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -38,10 +38,10 @@ TEST_CASE("HardwareAbstractionLayer::init() is invoked during WWaveDriver::init(
 TEST_CASE("Pin provided to WWaveDriver() is set to HardwareAbstractionLayer::PIN_MODE_INPUT during WWaveDriver::init()", "[constructor][init][hal][pin_mode]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,init));
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -49,17 +49,17 @@ TEST_CASE("Pin provided to WWaveDriver() is set to HardwareAbstractionLayer::PIN
 
     // Evalulate Result
     fakeit::Verify(Method(mock_hal,pinMode)).Once();
-    fakeit::Verify(Method(mock_hal,pinMode).Using(TEST_PIN, HardwareAbstractionLayer::PIN_MODE_INPUT));
+    fakeit::Verify(Method(mock_hal,pinMode).Using(TEST_PIN, nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT));
     CHECK(true);
 }
 
 TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::hal_init`, when HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::sys_config);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -72,10 +72,10 @@ TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::hal_init`, when Hard
 TEST_CASE("WWaveDriver::init() will stop processing if HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::sys_config);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -90,11 +90,11 @@ TEST_CASE("WWaveDriver::init() will stop processing if HardwareAbstractionLayer:
 TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::hal_gpio_config`, when pinMode() returns an error", "[init][hal][pin_mode][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -107,11 +107,11 @@ TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::hal_gpio_config`, wh
 TEST_CASE("WWaveDriver::init() will stop processing if pinMode() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -126,11 +126,11 @@ TEST_CASE("WWaveDriver::init() will stop processing if pinMode() returns an erro
 TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::success`, when no errors occur", "[init][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -143,11 +143,11 @@ TEST_CASE("WWaveDriver::init() returns `pulse_driver_error::success`, when no er
 TEST_CASE("WWaveDriver::pulse() generates well-formed W square wave (pulse) when called with a non-zero value", "[pulse][active][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -157,17 +157,17 @@ TEST_CASE("WWaveDriver::pulse() generates well-formed W square wave (pulse) when
     // Required to verify NO OTHER CALLS to these APIs are made (could be checked by supplying a specific list of return values)
     fakeit::Verify(Method(mock_hal,pinMode) + Method(mock_hal,digitalWrite) + Method(mock_hal,delayMicroseconds) + Method(mock_hal,pinMode) + Method(mock_hal,delayMicroseconds) + Method(mock_hal,pinMode) + Method(mock_hal,digitalWrite) + Method(mock_hal,delayMicroseconds) + Method(mock_hal,pinMode) + Method(mock_hal,delayMicroseconds)).Once();
     // Specific execution (does not guarantee that no other calls are made before and/or after even when supplied with the once command)
-    fakeit::Verify(Method(mock_hal,pinMode).Using(fakeit::_, HardwareAbstractionLayer::PIN_MODE_OUTPUT) + Method(mock_hal,digitalWrite).Using(fakeit::_, HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(796) + Method(mock_hal,pinMode).Using(fakeit::_, HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(730) + Method(mock_hal,pinMode).Using(fakeit::_, HardwareAbstractionLayer::PIN_MODE_OUTPUT) + Method(mock_hal,digitalWrite).Using(fakeit::_, HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(796) + Method(mock_hal,pinMode).Using(fakeit::_, HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(14330));
+    fakeit::Verify(Method(mock_hal,pinMode).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT) + Method(mock_hal,digitalWrite).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(796) + Method(mock_hal,pinMode).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(730) + Method(mock_hal,pinMode).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT) + Method(mock_hal,digitalWrite).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(796) + Method(mock_hal,pinMode).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(14330));
     CHECK(true);
 }
 
 TEST_CASE("WWaveDriver::pulse() omits pulse for fixed time period, when called with a zero value", "[pulse][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -177,18 +177,18 @@ TEST_CASE("WWaveDriver::pulse() omits pulse for fixed time period, when called w
     // Required to verify NO OTHER CALLS to these APIs are made (could be checked by supplying a specific list of return values)
     fakeit::Verify(Method(mock_hal,pinMode) + Method(mock_hal,delayMicroseconds)).Once();
     // Specific execution (does not guarantee that no other calls are made before and/or after even when supplied with the once command)
-    fakeit::Verify(Method(mock_hal,pinMode).Using(fakeit::_, HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(16663));
+    fakeit::Verify(Method(mock_hal,pinMode).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT) + Method(mock_hal,delayMicroseconds).Using(16663));
     CHECK(true);
 }
 
 TEST_CASE("Pin provided to WWaveDriver() is supplied to HAL interface when WWaveDriver::pulse() is called with a non-zero value", "[constructor][pulse][active][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -203,10 +203,10 @@ TEST_CASE("Pin provided to WWaveDriver() is supplied to HAL interface when WWave
 TEST_CASE("Pin provided to WWaveDriver() is supplied to HAL interface when WWaveDriver::pulse() is called with a zero value", "[constructor][pulse][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -220,7 +220,7 @@ TEST_CASE("Pin provided to WWaveDriver() is supplied to HAL interface when WWave
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_config`, when first invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -229,7 +229,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
         nes::rob::hal_error::success,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -242,7 +242,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the first invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -251,7 +251,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
         nes::rob::hal_error::success,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -266,14 +266,14 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_state`, when first invocation of digitalWrite() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -286,14 +286,14 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the first invocation of digitalWrite() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -308,7 +308,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when first invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::sys_clock,
         nes::rob::hal_error::success,
@@ -317,7 +317,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -330,7 +330,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the first invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::sys_clock,
         nes::rob::hal_error::success,
@@ -339,7 +339,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -354,7 +354,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_config`, when second invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -363,7 +363,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
         nes::rob::hal_error::success,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -376,7 +376,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the second invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -385,7 +385,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
         nes::rob::hal_error::success,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -400,7 +400,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when second invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::sys_clock,
@@ -409,7 +409,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -422,7 +422,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the second invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::sys_clock,
@@ -431,7 +431,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -446,7 +446,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_config`, when third invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -455,7 +455,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -468,7 +468,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the third invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -477,7 +477,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -492,14 +492,14 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_state`, when second invocation of digitalWrite() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -512,14 +512,14 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the second invocation of digitalWrite() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -534,7 +534,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when third invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::success,
@@ -543,7 +543,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -556,7 +556,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the third invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::success,
@@ -565,7 +565,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -580,7 +580,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_config`, when fourth invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -589,7 +589,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -602,7 +602,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processing if the fourth invocation of pinMode() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,pinMode)).Return(
@@ -611,7 +611,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -626,7 +626,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, will stop processi
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when fourth invocation of delayMicroseconds() returns an error", "[pulse][active][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::success,
@@ -635,7 +635,7 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
     );
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -648,11 +648,11 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_driver_error::success`, when no errors are encountered", "[pulse][active][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -665,10 +665,10 @@ TEST_CASE("WWaveDriver::pulse() called with a non-zero value, returns `pulse_dri
 TEST_CASE("WWaveDriver::pulse() called with a zero value, returns `pulse_driver_error::hal_gpio_config`, when pinMode() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,pinMode)).Return(nes::rob::hal_error::peripheral_gpio);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -681,10 +681,10 @@ TEST_CASE("WWaveDriver::pulse() called with a zero value, returns `pulse_driver_
 TEST_CASE("WWaveDriver::pulse() called with a zero value, will stop processing if digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,delayMicroseconds));
     fakeit::When(Method(mock_hal,pinMode)).Return(nes::rob::hal_error::peripheral_gpio);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -699,10 +699,10 @@ TEST_CASE("WWaveDriver::pulse() called with a zero value, will stop processing i
 TEST_CASE("WWaveDriver::pulse() called with a zero value, returns `pulse_driver_error::hal_clock`, when delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(nes::rob::hal_error::sys_clock);
     fakeit::Fake(Method(mock_hal,pinMode));
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -715,10 +715,10 @@ TEST_CASE("WWaveDriver::pulse() called with a zero value, returns `pulse_driver_
 TEST_CASE("WWaveDriver::pulse() called with a zero value, returns `pulse_driver_error::success`, when no errors occur", "[pulse][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::WWaveDriver w_wave_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action

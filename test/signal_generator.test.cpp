@@ -14,9 +14,9 @@
 
 TEST_CASE("PulseDriver::init() is invoked during init()", "[pulse_driver][init]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,init)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.init(nullptr);
@@ -28,9 +28,9 @@ TEST_CASE("PulseDriver::init() is invoked during init()", "[pulse_driver][init]"
 
 TEST_CASE("init() returns `signal_generator_error::driver_init`, when PulseDriver::init() returns an error", "[init][pulse_driver][error]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,init)).AlwaysReturn(nes::rob::pulse_driver_error::hal_init);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.init(nullptr);
@@ -41,9 +41,9 @@ TEST_CASE("init() returns `signal_generator_error::driver_init`, when PulseDrive
 
 TEST_CASE("init() returns `signal_generator_error::success`, when no errors occur", "[init][error]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,init)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.init(nullptr);
@@ -61,9 +61,9 @@ TEST_CASE("init() returns `signal_generator_error::success`, when no errors occu
  */
 TEST_CASE("Sequences consist of a synchronizing frame, a 5-bit preamble, and an 8-bit command.", "[signal][sync][preamble][sequence]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0xAA);
@@ -75,9 +75,9 @@ TEST_CASE("Sequences consist of a synchronizing frame, a 5-bit preamble, and an 
 
 TEST_CASE("The sychronizing frame shall be observed as a zero-pulse", "[signal][sync]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0x17);
@@ -89,9 +89,9 @@ TEST_CASE("The sychronizing frame shall be observed as a zero-pulse", "[signal][
 
 TEST_CASE("5-bit initialization sequence and is `00010`", "[signal][preamble]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0x17);
@@ -103,9 +103,9 @@ TEST_CASE("5-bit initialization sequence and is `00010`", "[signal][preamble]") 
 
 TEST_CASE("Sequences matches sequence parameter", "[signal][sequence]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0xAA);
@@ -117,9 +117,9 @@ TEST_CASE("Sequences matches sequence parameter", "[signal][sequence]") {
 
 TEST_CASE("Sequences longer than 8 bits will only use the bottom 8-bits", "[signal][sequence]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0xCC55FFAA);
@@ -131,13 +131,13 @@ TEST_CASE("Sequences longer than 8 bits will only use the bottom 8-bits", "[sign
 
 TEST_CASE("signal() halts when `pulse` returns error during preamble", "[signal][error][preamble]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0xAA);
@@ -150,7 +150,7 @@ TEST_CASE("signal() halts when `pulse` returns error during preamble", "[signal]
 
 TEST_CASE("signal() halts when `pulse` returns error during sequence", "[signal][error]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
@@ -161,7 +161,7 @@ TEST_CASE("signal() halts when `pulse` returns error during sequence", "[signal]
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.signal(0xAA);
@@ -174,13 +174,13 @@ TEST_CASE("signal() halts when `pulse` returns error during sequence", "[signal]
 
 TEST_CASE("signal() returns `signal_generator_error::driver_error`, when pulse() returns an error during preamble", "[signal][error][pulse_driver][preamble]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.signal(0xAA);
@@ -191,7 +191,7 @@ TEST_CASE("signal() returns `signal_generator_error::driver_error`, when pulse()
 
 TEST_CASE("signal() returns `signal_generator_error::driver_error`, when pulse() returns an error during sequence", "[signal][error][pulse_driver]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
@@ -202,7 +202,7 @@ TEST_CASE("signal() returns `signal_generator_error::driver_error`, when pulse()
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.signal(0xAA);
@@ -213,9 +213,9 @@ TEST_CASE("signal() returns `signal_generator_error::driver_error`, when pulse()
 
 TEST_CASE("signal() returns `signal_generator_error::success`, when no errors occur", "[signal][error]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.signal(0xAA);
@@ -226,9 +226,9 @@ TEST_CASE("signal() returns `signal_generator_error::success`, when no errors oc
 
 TEST_CASE("testSignal() produces a 20-bit sequence", "[test_signal]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.testSignal();
@@ -240,9 +240,9 @@ TEST_CASE("testSignal() produces a 20-bit sequence", "[test_signal]") {
 
 TEST_CASE("testSignal() sequence is `10101010101010101010`", "[test_signal]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.testSignal();
@@ -254,7 +254,7 @@ TEST_CASE("testSignal() sequence is `10101010101010101010`", "[test_signal]") {
 
 TEST_CASE("testSignal() halts when `pulse` returns error", "[test_signal][error][pulse_driver]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
@@ -264,7 +264,7 @@ TEST_CASE("testSignal() halts when `pulse` returns error", "[test_signal][error]
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     sig_gen.testSignal();
@@ -277,7 +277,7 @@ TEST_CASE("testSignal() halts when `pulse` returns error", "[test_signal][error]
 
 TEST_CASE("testSignal() returns `signal_generator_error::driver_error`, when pulse() returns an error during test sequence", "[testSignal][error][pulse_driver]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).Return(
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::success,
@@ -288,7 +288,7 @@ TEST_CASE("testSignal() returns `signal_generator_error::driver_error`, when pul
         nes::rob::pulse_driver_error::success,
         nes::rob::pulse_driver_error::hal_clock
     );
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.testSignal();
@@ -299,9 +299,9 @@ TEST_CASE("testSignal() returns `signal_generator_error::driver_error`, when pul
 
 TEST_CASE("testSignal() returns `signal_generator_error::success`, when no errors occur", "[testSignal][error]") {
     // Setup
-    fakeit::Mock<PulseDriver> mock_driver;
+    fakeit::Mock<nes::rob::PulseDriver> mock_driver;
     fakeit::When(Method(mock_driver,pulse)).AlwaysReturn(nes::rob::pulse_driver_error::success);
-    SignalGenerator sig_gen(&mock_driver.get());
+    nes::rob::SignalGenerator sig_gen(&mock_driver.get());
 
     // Action
     const std::error_code result = sig_gen.testSignal();

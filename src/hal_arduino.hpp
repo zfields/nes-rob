@@ -5,6 +5,8 @@
 
 #include "hardware_abstraction_layer.hpp"
 
+namespace nes { namespace rob {
+
 class HalArduino final : public HardwareAbstractionLayer {
   public:
     std::error_code delayMicroseconds (unsigned int pin) const override;
@@ -12,5 +14,7 @@ class HalArduino final : public HardwareAbstractionLayer {
     std::error_code init (void * params) override;
     std::error_code pinMode (unsigned int pin, int mode) const override;
 };
+
+}} // namespace nes::rob
 
 #endif // HAL_ARDUINO_HPP

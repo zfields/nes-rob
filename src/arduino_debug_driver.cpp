@@ -5,6 +5,8 @@
 #include "hardware_abstraction_layer.hpp"
 #include "pulse_driver_error.hpp"
 
+using namespace nes::rob;
+
 //TODO: Abstract this from Arduino
 std::error_code
 ArduinoDebugDriver::init (
@@ -30,7 +32,7 @@ ArduinoDebugDriver::init (
     Serial.print("PIN_STATE_LOW: ");
     Serial.println(HardwareAbstractionLayer::PIN_STATE_LOW, DEC);
 
-    return nes::rob::pulse_driver_error::success;
+    return pulse_driver_error::success;
 }
 
 std::error_code
@@ -42,5 +44,5 @@ ArduinoDebugDriver::pulse (
     } else {
         Serial.println("rest");
     }
-    return nes::rob::pulse_driver_error::success;
+    return pulse_driver_error::success;
 }

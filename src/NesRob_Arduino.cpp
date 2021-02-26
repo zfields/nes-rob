@@ -5,6 +5,8 @@
 #include "signal_generator.hpp"
 #include "w_wave_driver.hpp"
 
+using namespace nes::rob;
+
 NesRob::NesRob (
     unsigned int pin_,
     CommandTarget target_

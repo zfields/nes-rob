@@ -4,6 +4,8 @@
 
 #include "hal_error.hpp"
 
+using namespace nes::rob;
+
 namespace
 {
     // Max delay of 16383 guaranteed to be accurate by Arduino reference
@@ -20,7 +22,7 @@ HalArduino::delayMicroseconds (
         ::delayMicroseconds(MAX_DELAY_MICROSECONDS);
     }
     ::delayMicroseconds(us_);
-    return make_error_code(nes::rob::hal_error::success);
+    return make_error_code(hal_error::success);
 }
 
 std::error_code
@@ -29,7 +31,7 @@ HalArduino::digitalWrite (
     int state_
 ) const {
     ::digitalWrite(pin_,state_);
-    return make_error_code(nes::rob::hal_error::success);
+    return make_error_code(hal_error::success);
 }
 
 std::error_code
@@ -37,7 +39,7 @@ HalArduino::init (
     void * params_
 ) {
     (void)params_; // ignore parameter
-    return make_error_code(nes::rob::hal_error::success);
+    return make_error_code(hal_error::success);
 }
 
 std::error_code
@@ -46,7 +48,7 @@ HalArduino::pinMode (
     int mode_
 ) const {
     ::pinMode(pin_,mode_);
-    return make_error_code(nes::rob::hal_error::success);
+    return make_error_code(hal_error::success);
 }
 
 const int HardwareAbstractionLayer::PIN_STATE_HIGH = HIGH;

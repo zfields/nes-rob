@@ -12,20 +12,20 @@
 #include "led_ntsc_driver.hpp"
 #include "pulse_driver_error.hpp"
 
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_STATE_LOW = 40;
-__attribute__((weak)) const int HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_STATE_HIGH = 10;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT = 20;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = 30;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW = 40;
+__attribute__((weak)) const int nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT = 50;
 
 TEST_CASE("HardwareAbstractionLayer::init() is invoked during LedNtscDriver::init()", "[init][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::Fake(Method(mock_hal,pinMode));
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -39,11 +39,11 @@ TEST_CASE("HardwareAbstractionLayer::init() is invoked during LedNtscDriver::ini
 TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::PIN_MODE_OUTPUT during LedNtscDriver::init()", "[constructor][init][hal][pin_mode]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::Fake(Method(mock_hal,digitalWrite));
     fakeit::Fake(Method(mock_hal,init));
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -51,18 +51,18 @@ TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::P
 
     // Evalulate Result
     fakeit::Verify(Method(mock_hal,pinMode)).Once();
-    fakeit::Verify(Method(mock_hal,pinMode).Using(TEST_PIN, HardwareAbstractionLayer::PIN_MODE_OUTPUT));
+    fakeit::Verify(Method(mock_hal,pinMode).Using(TEST_PIN, nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT));
     CHECK(true);
 }
 
 TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::PIN_STATE_LOW during LedNtscDriver::init()", "[constructor][init][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::Fake(Method(mock_hal,init));
     fakeit::Fake(Method(mock_hal,pinMode));
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -70,18 +70,18 @@ TEST_CASE("Pin provided to LedNtscDriver() is set to HardwareAbstractionLayer::P
 
     // Evalulate Result
     fakeit::Verify(Method(mock_hal,digitalWrite)).Once();
-    fakeit::Verify(Method(mock_hal,digitalWrite).Using(TEST_PIN, HardwareAbstractionLayer::PIN_STATE_LOW));
+    fakeit::Verify(Method(mock_hal,digitalWrite).Using(TEST_PIN, nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW));
     CHECK(true);
 }
 
 TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_init`, when HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::sys_config);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -94,11 +94,11 @@ TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_init`, when Ha
 TEST_CASE("LedNtscDriver::init() will stop processing if HardwareAbstractionLayer::init() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::sys_config);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -113,11 +113,11 @@ TEST_CASE("LedNtscDriver::init() will stop processing if HardwareAbstractionLaye
 TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_gpio_config`, when pinMode() returns an error", "[init][hal][pin_mode][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -130,11 +130,11 @@ TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_gpio_config`, 
 TEST_CASE("LedNtscDriver::init() will stop processing if pinMode() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -149,11 +149,11 @@ TEST_CASE("LedNtscDriver::init() will stop processing if pinMode() returns an er
 TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_gpio_state`, when digitalWrite() returns an error", "[init][hal][pin_state][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -166,11 +166,11 @@ TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::hal_gpio_state`, w
 TEST_CASE("LedNtscDriver::init() will stop processing if digitalWrite() returns an error", "[init][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -185,11 +185,11 @@ TEST_CASE("LedNtscDriver::init() will stop processing if digitalWrite() returns 
 TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::success`, when no errors occur", "[init][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,init)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -202,11 +202,11 @@ TEST_CASE("LedNtscDriver::init() returns `pulse_driver_error::success`, when no 
 TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when LedNtscDriver::pulse() is called with a non-zero value", "[constructor][pulse][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,pinMode)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -220,10 +220,10 @@ TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when Led
 TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when LedNtscDriver::pulse() is called with a zero value", "[constructor][pulse][hal]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -237,10 +237,10 @@ TEST_CASE("Pin provided to LedNtscDriver() is supplied to HAL interface when Led
 TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible pulse when called with a non-zero value", "[pulse][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -248,17 +248,17 @@ TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible pulse when called wi
 
     // Evalulate Result
     fakeit::Verify(Method(mock_hal,digitalWrite) + Method(mock_hal,delayMicroseconds) + Method(mock_hal,digitalWrite) + Method(mock_hal,delayMicroseconds)).Once();
-    fakeit::Verify(Method(mock_hal,digitalWrite).Using(fakeit::_, HardwareAbstractionLayer::PIN_STATE_HIGH) + Method(mock_hal,delayMicroseconds).Using(1500) + Method(mock_hal,digitalWrite).Using(fakeit::_, HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(15166));
+    fakeit::Verify(Method(mock_hal,digitalWrite).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_STATE_HIGH) + Method(mock_hal,delayMicroseconds).Using(1500) + Method(mock_hal,digitalWrite).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(15166));
     CHECK(true);
 }
 
 TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible blank called with a zero value", "[pulse][hal][pin_state]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -266,20 +266,20 @@ TEST_CASE("LedNtscDriver::pulse() generates NTSC compatible blank called with a 
 
     // Evalulate Result
     fakeit::Verify(Method(mock_hal,digitalWrite) + Method(mock_hal,delayMicroseconds)).Once();
-    fakeit::Verify(Method(mock_hal,digitalWrite).Using(fakeit::_, HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(16666));
+    fakeit::Verify(Method(mock_hal,digitalWrite).Using(fakeit::_, nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW) + Method(mock_hal,delayMicroseconds).Using(16666));
     CHECK(true);
 }
 
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_state`, when first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -292,13 +292,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_d
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the first invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::peripheral_gpio,
         nes::rob::hal_error::success
     );
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -313,13 +313,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop proces
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_gpio_state`, when second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -332,13 +332,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_d
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the second invocation of digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::peripheral_gpio
     );
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -353,10 +353,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop proces
 TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `pulse_driver_error::hal_gpio_state`, when digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -369,10 +369,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `pulse_drive
 TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing if digitalWrite() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::peripheral_gpio);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -387,13 +387,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::sys_clock,
         nes::rob::hal_error::success
     );
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -406,13 +406,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_d
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the first invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::sys_clock,
         nes::rob::hal_error::success
     );
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -427,13 +427,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop proces
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_driver_error::hal_clock`, when second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::sys_clock
     );
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -446,13 +446,13 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_d
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop processing if the second invocation of delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).Return(
         nes::rob::hal_error::success,
         nes::rob::hal_error::sys_clock
     );
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -467,10 +467,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, will stop proces
 TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `pulse_driver_error::hal_clock`, when delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::sys_clock);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -483,10 +483,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `pulse_drive
 TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing if delayMicroseconds() returns an error", "[pulse][hal][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::sys_clock);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -501,10 +501,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a zero value, will stop processing
 TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_driver_error::success`, when no errors occur", "[pulse][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action
@@ -517,10 +517,10 @@ TEST_CASE("LedNtscDriver::pulse() called with a non-zero value, returns `pulse_d
 TEST_CASE("LedNtscDriver::pulse() called with a zero value, returns `pulse_driver_error::success`, when no errors occur", "[pulse][error]") {
     // Setup
     static const unsigned int TEST_PIN = 13;
-    fakeit::Mock<HardwareAbstractionLayer> mock_hal;
+    fakeit::Mock<nes::rob::HardwareAbstractionLayer> mock_hal;
     fakeit::When(Method(mock_hal,delayMicroseconds)).AlwaysReturn(nes::rob::hal_error::success);
     fakeit::When(Method(mock_hal,digitalWrite)).AlwaysReturn(nes::rob::hal_error::success);
-    LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
+    nes::rob::LedNtscDriver led_ntsc_driver(&mock_hal.get(),TEST_PIN);
     mock_hal.ClearInvocationHistory();
 
     // Action

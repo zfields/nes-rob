@@ -5,6 +5,8 @@
 
 #include "pulse_driver.hpp"
 
+namespace nes { namespace rob {
+
 class HardwareAbstractionLayer;
 
 class WWaveDriver final : public PulseDriver {
@@ -17,5 +19,7 @@ class WWaveDriver final : public PulseDriver {
     HardwareAbstractionLayer * const _hal;
     const unsigned int _pin;
 };
+
+}} // namespace nes::rob
 
 #endif // W_WAVE_DRIVER_HPP
