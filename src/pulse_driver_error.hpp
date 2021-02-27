@@ -1,3 +1,6 @@
+#ifndef PULSE_DRIVER_ERROR_HPP
+#define PULSE_DRIVER_ERROR_HPP
+
 #include <system_error>
 
 namespace nes { namespace rob {
@@ -22,3 +25,5 @@ template <>
 struct is_error_code_enum<nes::rob::pulse_driver_error> : true_type {};
 
 }
+
+#endif // PULSE_DRIVER_ERROR_HPP

@@ -1,3 +1,6 @@
+#ifndef SIGNAL_GENERATOR_ERROR_HPP
+#define SIGNAL_GENERATOR_ERROR_HPP
+
 #include <system_error>
 
 namespace nes { namespace rob {
@@ -20,3 +23,5 @@ template <>
 struct is_error_code_enum<nes::rob::signal_generator_error> : true_type {};
 
 }
+
+#endif // SIGNAL_GENERATOR_ERROR_HPP
