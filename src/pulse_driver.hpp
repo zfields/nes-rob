@@ -9,7 +9,8 @@ class PulseDriver {
   public:
     virtual ~PulseDriver (void) { };
     virtual std::error_code init (void * params) = 0;
-    virtual std::error_code pulse (unsigned int active) const = 0;
+    virtual std::error_code pulse (void * reserved = nullptr) const = 0;
+    virtual std::error_code rest (void * reserved = nullptr) const = 0;
 };
 
 }} // namespace nes::rob

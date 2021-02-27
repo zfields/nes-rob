@@ -37,38 +37,47 @@ LedNtscDriver::init (
 
 std::error_code
 LedNtscDriver::pulse (
-    unsigned int active_
+    void * reserved_
 ) const {
     std::error_code result;
+    (void)reserved_;
 
-    if (active_) {
-        // Enable LED
-        if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_HIGH)) {
-            result = make_error_code(pulse_driver_error::hal_gpio_state);
-        } else if (_hal->delayMicroseconds(1500)) {
-            result = make_error_code(pulse_driver_error::hal_clock);
+    // Enable LED
+    if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_HIGH)) {
+        result = make_error_code(pulse_driver_error::hal_gpio_state);
+    } else if (_hal->delayMicroseconds(1500)) {
+        result = make_error_code(pulse_driver_error::hal_clock);
 
-        // Disable LED
-        } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
-            result = make_error_code(pulse_driver_error::hal_gpio_state);
-        } else if (_hal->delayMicroseconds(15166)) {
-            result = make_error_code(pulse_driver_error::hal_clock);
+    // Disable LED
+    } else if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
+        result = make_error_code(pulse_driver_error::hal_gpio_state);
+    } else if (_hal->delayMicroseconds(15166)) {
+        result = make_error_code(pulse_driver_error::hal_clock);
 
-        // NTSC pulse generated successfully
-        } else {
-            result = make_error_code(pulse_driver_error::success);
-        }
+    // NTSC pulse generated successfully
     } else {
-        // Disable LED
-        if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
-            result = make_error_code(pulse_driver_error::hal_gpio_state);
-        } else if (_hal->delayMicroseconds(16666)) {
-            result = make_error_code(pulse_driver_error::hal_clock);
+        result = make_error_code(pulse_driver_error::success);
+    }
 
-        // NTSC blank generated successfully
-        } else {
-            result = make_error_code(pulse_driver_error::success);
-        }
+    return result;
+}
+
+std::error_code
+LedNtscDriver::rest (
+    void * reserved_
+) const {
+    std::error_code result;
+    (void)reserved_;
+
+    // Disable LED
+    if (_hal->digitalWrite(_pin, HardwareAbstractionLayer::PIN_STATE_LOW)) {
+        result = make_error_code(pulse_driver_error::hal_gpio_state);
+    } else if (_hal->delayMicroseconds(16666)) {
+        result = make_error_code(pulse_driver_error::hal_clock);
+
+    // NTSC blank generated successfully
+    } else {
+        result = make_error_code(pulse_driver_error::success);
     }
 
     return result;

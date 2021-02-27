@@ -13,7 +13,8 @@ class WWaveDriver final : public PulseDriver {
   public:
     WWaveDriver (HardwareAbstractionLayer * hal, unsigned int pin);
     std::error_code init (void * params) override;
-    std::error_code pulse (unsigned int active) const override;
+    std::error_code pulse (void * reserved = nullptr) const override;
+    std::error_code rest (void * reserved = nullptr) const override;
 
   private:
     HardwareAbstractionLayer * const _hal;

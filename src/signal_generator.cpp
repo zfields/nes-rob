@@ -38,7 +38,7 @@ SignalGenerator::signal (
 
     // Pulse initialization sequence
     for (unsigned int i = 0 ; i < (sizeof(preamble)/sizeof(unsigned int)) ; ++i) {
-        if (_driver->pulse(preamble[i])) {
+        if (preamble[i] ? _driver->pulse() : _driver->rest()) {
             result = make_error_code(signal_generator_error::driver_error);
             halt = true;
             break;
@@ -48,8 +48,8 @@ SignalGenerator::signal (
     if (!halt) {
         // Pulse sequence
         for (int i = 7 ; i >= 0 ; --i) {
-            unsigned int active = ((static_cast<unsigned int>(sequence_) >> i) & static_cast<unsigned int>(0x1));
-            if (_driver->pulse(active)) {
+            unsigned int pulse = ((static_cast<unsigned int>(sequence_) >> i) & static_cast<unsigned int>(0x1));
+            if (pulse ? _driver->pulse() : _driver->rest()) {
                 result = make_error_code(signal_generator_error::driver_error);
                 break;
             }
@@ -70,7 +70,7 @@ SignalGenerator::testSignal (
 
     // Test signal sequence
     for (unsigned int i = 0 ; i < (sizeof(test_signal)/sizeof(unsigned int)) ; ++i) {
-        if (_driver->pulse(test_signal[i])) {
+        if (test_signal[i] ? _driver->pulse() : _driver->rest()) {
             result = make_error_code(signal_generator_error::driver_error);
             break;
         }

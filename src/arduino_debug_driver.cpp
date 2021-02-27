@@ -37,12 +37,22 @@ ArduinoDebugDriver::init (
 
 std::error_code
 ArduinoDebugDriver::pulse (
-    unsigned int active_
+    void * reserved_
 ) const {
-    if (active_) {
-        Serial.println("PULSE");
-    } else {
-        Serial.println("rest");
-    }
+    (void)reserved_;
+
+    Serial.println("PULSE");
+
+    return pulse_driver_error::success;
+}
+
+std::error_code
+ArduinoDebugDriver::rest (
+    void * reserved_
+) const {
+    (void)reserved_;
+
+    Serial.println("rest");
+
     return pulse_driver_error::success;
 }
