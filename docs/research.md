@@ -56,14 +56,14 @@ be prefixed to the preamble.
 
 #### Command Bytes
 
-- [`0xBA`] ARMS_LEFT
-- [`0xEA`] ARMS_RIGHT
-- [`0xAE`] ARMS_LOWER
-- [`0xFB`] ARMS_LOWER_2
-- [`0xFA`] ARMS_RAISE
-- [`0xBB`] ARMS_RAISE_2
-- [`0xBE`] ARMS_CLOSE
-- [`0xEE`] ARMS_OPEN
+- [`0xBA`] LEFT
+- [`0xEA`] RIGHT
+- [`0xAE`] DOWN
+- [`0xFB`] DOWN_2
+- [`0xFA`] UP
+- [`0xBB`] UP_2
+- [`0xBE`] CLOSE
+- [`0xEE`] OPEN
 - [`0xEB`] LED_ENABLE
 - [`0xAB`] RECALIBRATE
 
@@ -185,37 +185,37 @@ signal is released after 600-800us.
 
 #### Command Timing
 
-- ARMS_LEFT
+- LEFT
 
-  ![Arms Left Protocol Timing Graph](img/protocol-arms-left.png)
+  ![Arms Left Protocol Timing Graph](img/protocol-left.png)
 
-- ARMS_RIGHT
+- RIGHT
 
-  ![Arms Right Protocol Timing Graph](img/protocol-arms-right.png)
+  ![Arms Right Protocol Timing Graph](img/protocol-right.png)
 
-- ARMS_LOWER
+- DOWN
 
-  ![Arms Lower Protocol Timing Graph](img/protocol-arms-lower.png)
+  ![Arms Lower Protocol Timing Graph](img/protocol-down.png)
 
-- ARMS_LOWER_2
+- DOWN_2
 
-  ![Arms Lower 2 Protocol Timing Graph](img/protocol-arms-lower-2.png)
+  ![Arms Lower 2 Protocol Timing Graph](img/protocol-down-2.png)
 
-- ARMS_RAISE
+- UP
 
-  ![Arms Raise Protocol Timing Graph](img/protocol-arms-raise.png)
+  ![Arms Raise Protocol Timing Graph](img/protocol-up.png)
 
-- ARMS_RAISE_2
+- UP_2
 
-  ![Arms Raise 2 Protocol Timing Graph](img/protocol-arms-raise-2.png)
+  ![Arms Raise 2 Protocol Timing Graph](img/protocol-up-2.png)
 
-- ARMS_CLOSE
+- CLOSE
 
-  ![Arms Close Protocol Timing Graph](img/protocol-arms-close.png)
+  ![Arms Close Protocol Timing Graph](img/protocol-close.png)
 
-- ARMS_OPEN
+- OPEN
 
-  ![Arms Open Protocol Timing Graph](img/protocol-arms-open.png)
+  ![Arms Open Protocol Timing Graph](img/protocol-open.png)
 
 - LED_ENABLE
 

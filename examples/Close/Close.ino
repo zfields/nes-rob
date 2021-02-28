@@ -33,6 +33,6 @@ void setup() {
 
 // Blink command at 1 Hz
 void loop() {
-  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
+  rob.sendCommand(NesRob::Command::CLOSE);
   ::delay(1000);
 }

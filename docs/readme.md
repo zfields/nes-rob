@@ -24,7 +24,7 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
+  rob.sendCommand(NesRob::Command::CLOSE);
   delay(1000);
 }
 ```
@@ -44,8 +44,17 @@ _Click the title to view the API documentation page._
 Examples
 --------
 
-* [CloseArms](https://www.github.com/zfields/nes-rob/tree/main/examples/CloseArms/CloseArms.ino):
+* [Blink](https://www.github.com/zfields/nes-rob/tree/main/examples/Blink/Blink.ino):
+Validate your hardware configuration by flashing the LED on R.O.B.'s head.
+
+* [Close](https://www.github.com/zfields/nes-rob/tree/main/examples/Close/Close.ino):
 Validate your hardware configuration by sending a simple command to R.O.B.
+
+* [Stow](https://www.github.com/zfields/nes-rob/tree/main/examples/Stow/Stow.ino):
+Put R.O.B. into the position required to fit the original packaging.
+
+* [StowDirect](https://www.github.com/zfields/nes-rob/tree/main/examples/StowDirect/StowDirect.ino):
+Use interrupts to control R.O.B. and ready him for the original packaging.
 
 [Research](research.md)
 -----------------------

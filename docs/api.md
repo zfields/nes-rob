@@ -10,31 +10,67 @@ The `Command` enum class specifies which movements are available to R.O.B.
 
 Command List:
 
-- `ARMS_LEFT`
+- `LEFT`
 
   Turn R.O.B.'s torso to the left one station [1,5].
 
-- `ARMS_RIGHT`
+- `ARMS_LEFT` **[Deprecated]**
+
+  Turn R.O.B.'s torso to the left one station [1,5].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `RIGHT`
 
   Turn R.O.B.'s torso to the right one station [1,5].
 
-- `ARMS_LOWER`
+- `ARMS_RIGHT` **[Deprecated]**
+
+  Turn R.O.B.'s torso to the right one station [1,5].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `DOWN`
 
   Lower R.O.B.'s arms one notch (on back of spine) [1,6].
 
-- `ARMS_LOWER_2`
+- `ARMS_LOWER` **[Deprecated]**
+
+  Lower R.O.B.'s arms one notch (on back of spine) [1,6].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `DOWN_2`
 
   Lower R.O.B.'s arms two notches (on back of spine) [1,6].
 
-- `ARMS_RAISE`
+- `ARMS_LOWER_2` **[Deprecated]**
+
+  Lower R.O.B.'s arms two notches (on back of spine) [1,6].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `UP`
 
   Raise R.O.B.'s arms one notch (on back of spine) [1,6].
 
-- `ARMS_RAISE_2`
+- `ARMS_RAISE` **[Deprecated]**
+
+  Raise R.O.B.'s arms one notch (on back of spine) [1,6].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `UP_2`
 
   Raise R.O.B.'s arms two notches (on back of spine) [1,6].
 
-- `ARMS_CLOSE`
+- `ARMS_RAISE_2` **[Deprecated]**
+
+  Raise R.O.B.'s arms two notches (on back of spine) [1,6].
+
+  > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
+
+- `CLOSE`
 
   Brings R.O.B.'s arms together.
 
@@ -44,7 +80,7 @@ Command List:
 
   > _**WARNING:** This enum was deprecated in v1.1.0, and is no longer supported._
 
-- `ARMS_OPEN`
+- `OPEN`
 
   Spreads R.O.B.'s arms apart.
 
@@ -200,7 +236,7 @@ NesRob rob;
 void setup() { }
 
 void loop() {
-  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
+  rob.sendCommand(NesRob::Command::CLOSE);
   delay(1000);
 }
 ```

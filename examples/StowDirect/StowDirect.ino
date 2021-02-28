@@ -57,22 +57,22 @@ void setup() {
   } while(::analogRead(A0) < EPSILON);
 
   // Execute stow routine
-  rob.sendCommand(NesRob::Command::ARMS_LOWER_2);
+  rob.sendCommand(NesRob::Command::LOWER_2);
   do {
     ::delay(SAMPLE_DELAY);
   } while(::analogRead(A0) < EPSILON);
 
-  rob.sendCommand(NesRob::Command::ARMS_LOWER_2);
+  rob.sendCommand(NesRob::Command::LOWER_2);
   do {
     ::delay(SAMPLE_DELAY);
   } while(::analogRead(A0) < EPSILON);
 
-  rob.sendCommand(NesRob::Command::ARMS_LOWER);
+  rob.sendCommand(NesRob::Command::LOWER);
   do {
     ::delay(SAMPLE_DELAY);
   } while(::analogRead(A0) < EPSILON);
 
-  rob.sendCommand(NesRob::Command::ARMS_CLOSE);
+  rob.sendCommand(NesRob::Command::CLOSE);
   do {
     ::delay(SAMPLE_DELAY);
   } while(::analogRead(A0) < EPSILON);

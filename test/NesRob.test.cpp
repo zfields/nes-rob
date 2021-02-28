@@ -6,14 +6,14 @@
 #include "NesRob.h"
 
 TEST_CASE("Command Enum Class Verification", "[commands]") {
-    CHECK(static_cast<int>(NesRob::Command::ARMS_LEFT) == 0xBA);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_RIGHT) == 0xEA);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_LOWER) == 0xAE);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_LOWER_2) == 0xFB);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_RAISE) == 0xFA);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_RAISE_2) == 0xBB);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_CLOSE) == 0xBE);
-    CHECK(static_cast<int>(NesRob::Command::ARMS_OPEN) == 0xEE);
+    CHECK(static_cast<int>(NesRob::Command::LEFT) == 0xBA);
+    CHECK(static_cast<int>(NesRob::Command::RIGHT) == 0xEA);
+    CHECK(static_cast<int>(NesRob::Command::DOWN) == 0xAE);
+    CHECK(static_cast<int>(NesRob::Command::DOWN_2) == 0xFB);
+    CHECK(static_cast<int>(NesRob::Command::UP) == 0xFA);
+    CHECK(static_cast<int>(NesRob::Command::UP_2) == 0xBB);
+    CHECK(static_cast<int>(NesRob::Command::CLOSE) == 0xBE);
+    CHECK(static_cast<int>(NesRob::Command::OPEN) == 0xEE);
     CHECK(static_cast<int>(NesRob::Command::LED_DISABLE) == 0xAA);
     CHECK(static_cast<int>(NesRob::Command::LED_ENABLE) == 0xEB);
     CHECK(static_cast<int>(NesRob::Command::RECALIBRATE) == 0xAB);
