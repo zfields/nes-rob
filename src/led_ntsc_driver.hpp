@@ -9,10 +9,23 @@ namespace nes { namespace rob {
 
 class HardwareAbstractionLayer;
 
+/**
+ * \brief The LED NTSC implementation of the pulse driver interface
+ *
+ * This implementation requires an LED light to be attached to the digital GPIO
+ * pin. The pulses emitted adhere to the NTSC protocol, which is required to
+ * communicate with R.O.B.
+ */
 class LedNtscDriver final : public PulseDriver {
   public:
+    /**
+     * \brief <em> constructor </em>
+     *
+     * \param[in] hal A HardwareAbstractionLayer instance
+     * \param[in] pin The digital GPIO pin used to generate pulses
+     */
     LedNtscDriver (HardwareAbstractionLayer * hal, unsigned int pin);
-    std::error_code init (void * params) override;
+    std::error_code init (void * reserved = nullptr) override;
     std::error_code pulse (void * reserved = nullptr) const override;
     std::error_code rest (void * reserved = nullptr) const override;
 

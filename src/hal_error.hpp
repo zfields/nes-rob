@@ -5,12 +5,15 @@
 
 namespace nes { namespace rob {
 
+/**
+ * \brief Hardware Abstraction Layer Errors
+ */
 enum class hal_error
 {
-    success = 0,
-    peripheral_gpio,
-    sys_clock,
-    sys_config,
+    success = 0,        /**< Success. */
+    peripheral_gpio,    /**< GPIO peripheral error. */
+    sys_clock,          /**< System clock error. */
+    sys_config,         /**< Failed to properly configure hardware. */
 };
 
 std::error_code make_error_code(hal_error e);

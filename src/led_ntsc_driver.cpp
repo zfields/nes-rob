@@ -15,11 +15,11 @@ LedNtscDriver::LedNtscDriver (
 
 std::error_code
 LedNtscDriver::init (
-    void * params_
+    void * reserved_
 ) {
     std::error_code result;
 
-    (void)params_;  // ignore parameters
+    (void)reserved_;  // ignore parameters
 
     // Configure the HAL
     if (_hal->init(nullptr)) {

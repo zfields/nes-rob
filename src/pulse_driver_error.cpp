@@ -2,7 +2,7 @@
 
 namespace nes { namespace rob {
 
-class pulse_driver_category_impl : public std::error_category
+class pulse_driver_error_category : public std::error_category
 {
   public:
     virtual std::error_condition default_error_condition (int ev) const noexcept override;
@@ -17,17 +17,17 @@ using namespace nes::rob;
 namespace {
 
 const std::error_category &
-pulse_driver_category (
+pulse_driver_error_category_instance (
     void
 ) {
-    static pulse_driver_category_impl instance;
+    static pulse_driver_error_category instance;
     return instance;
 }
 
 }
 
 std::error_condition
-pulse_driver_category_impl::default_error_condition (
+pulse_driver_error_category::default_error_condition (
     int ev
 ) const noexcept {
     // Define equivalence relationships with std::errc
@@ -38,18 +38,18 @@ pulse_driver_category_impl::default_error_condition (
 }
 
 std::string
-pulse_driver_category_impl::message (
+pulse_driver_error_category::message (
     int ev
 ) const {
     switch (static_cast<pulse_driver_error>(ev)) {
       case pulse_driver_error::success:
         return "Success.";
       case pulse_driver_error::hal_clock:
-        return "HAL clock failure.";
+        return "HAL clock error occurred.";
       case pulse_driver_error::hal_gpio_config:
-        return "Failed to update HAL GPIO configuration.";
+        return "HAL GPIO peripheral configuration error occurred.";
       case pulse_driver_error::hal_gpio_state:
-        return "Failed to update HAL GPIO state.";
+        return "HAL failed to update the GPIO state.";
       case pulse_driver_error::hal_init:
         return "Failed to initialize HAL interface.";
       default:
@@ -58,7 +58,7 @@ pulse_driver_category_impl::message (
 }
 
 const char *
-pulse_driver_category_impl::name (
+pulse_driver_error_category::name (
     void
 ) const noexcept {
     return "pulse_driver_error";
@@ -68,12 +68,12 @@ std::error_code
 nes::rob::make_error_code (
     pulse_driver_error e
 ) {
-    return {static_cast<int>(e), pulse_driver_category()};
+    return {static_cast<int>(e), pulse_driver_error_category_instance()};
 }
 
 std::error_condition
 nes::rob::make_error_condition (
     pulse_driver_error e
 ) {
-    return {static_cast<int>(e), pulse_driver_category()};
+    return {static_cast<int>(e), pulse_driver_error_category_instance()};
 }

@@ -10,9 +10,9 @@ using namespace nes::rob;
 //TODO: Abstract this from Arduino
 std::error_code
 ArduinoDebugDriver::init (
-    void * params_
+    void * reserved_
 ) {
-    (void)params_; // ignore parameter
+    (void)reserved_; // ignore parameter
 
     // Initialize Debug Output
     Serial.begin(115200);

@@ -36,9 +36,9 @@ HalArduino::digitalWrite (
 
 std::error_code
 HalArduino::init (
-    void * params_
+    void * reserved_
 ) {
-    (void)params_; // ignore parameter
+    (void)reserved_; // ignore parameter
     return make_error_code(hal_error::success);
 }
 
@@ -51,8 +51,8 @@ HalArduino::pinMode (
     return make_error_code(hal_error::success);
 }
 
-const int HardwareAbstractionLayer::PIN_STATE_HIGH = HIGH;
 const int HardwareAbstractionLayer::PIN_MODE_INPUT = INPUT;
 const int HardwareAbstractionLayer::PIN_MODE_INPUT_PULLUP = INPUT_PULLUP;
-const int HardwareAbstractionLayer::PIN_STATE_LOW = LOW;
 const int HardwareAbstractionLayer::PIN_MODE_OUTPUT = OUTPUT;
+const int HardwareAbstractionLayer::PIN_STATE_HIGH = HIGH;
+const int HardwareAbstractionLayer::PIN_STATE_LOW = LOW;

@@ -5,13 +5,16 @@
 
 namespace nes { namespace rob {
 
+/**
+ * \brief Pulse Driver Errors
+ */
 enum class pulse_driver_error
 {
-    success = 0,
-    hal_clock,
-    hal_gpio_config,
-    hal_gpio_state,
-    hal_init
+    success = 0,        /**< Success. */
+    hal_clock,          /**< HAL clock error occurred. */
+    hal_gpio_config,    /**< HAL GPIO peripheral configuration error occurred. */
+    hal_gpio_state,     /**< HAL failed to update the GPIO state. */
+    hal_init            /**< Failed to initialize HAL interface. */
 };
 
 std::error_code make_error_code(pulse_driver_error e);

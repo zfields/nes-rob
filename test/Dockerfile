@@ -4,7 +4,7 @@
 # $ docker build . --tag nes-rob
 
 # Launch development environment
-# $ docker run --interactive --rm --tty --volume $(pwd)/..:/nes-rob/ nes-rob
+# $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob
 
 # Base Image
 FROM alpine

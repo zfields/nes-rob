@@ -2,7 +2,7 @@ NES R.O.B. Control Library
 ==========================
 
 This library allows an Arduino board to control the Nintendo Entertainment
-System Robot Operating Buddy (R.O.B.). The hardware configuration needed to
+System Robotic Operating Buddy (R.O.B.). The hardware configuration needed to
 control R.O.B. requires the placement of an LED in front of the left eye. The
 LED should be controlled by the microcontroller using this library.
 
@@ -36,10 +36,10 @@ void loop() {
 > [Anne Barela's guide](https://learn.adafruit.com/controlling-a-classic-nintendo-r-o-b-robot-using-circuit-playground-express/overview)
 > at Adafruit._
 
-[API Documentation](api.md)
----------------------------
+API Documentation
+-----------------
 
-_Click the title to view the API documentation page._
+_[Click here](api.md) to view the API documentation page._
 
 Examples
 --------
@@ -56,7 +56,7 @@ Put R.O.B. into the position required to fit the original packaging.
 * [StowDirect](https://www.github.com/zfields/nes-rob/tree/main/examples/StowDirect/StowDirect.ino):
 Use interrupts to control R.O.B. and ready him for the original packaging.
 
-[Research](research.md)
------------------------
+Research
+--------
 
-_Click the title to view the research page._
+_[Click here](research.md) to view the research page._

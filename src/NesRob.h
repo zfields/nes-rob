@@ -11,63 +11,140 @@ class HardwareAbstractionLayer;
 
 }} // namespace nes::rob
 
+/**
+ * \brief Nintendo R.O.B. Control Library
+ *
+ * The library defines and generates all known R.O.B. commands.
+ */
 class NesRob {
   public:
+    /**
+     * \brief Available R.O.B. Commands
+     */
     enum class Command : uint8_t {
-        LEFT = 0xBA,
-        RIGHT = 0xEA,
-        DOWN = 0xAE,
-        DOWN_2 = 0xFB,
-        UP = 0xFA,
-        UP_2 = 0xBB,
-        CLOSE = 0xBE,
-        OPEN = 0xEE,
-        LED_DISABLE = 0xAA,
-        LED_ENABLE = 0xEB,
-        RECALIBRATE = 0xAB,
+        LEFT = 0xBA,        /**< Rotate R.O.B.'s torso left. */
+        RIGHT = 0xEA,       /**< Rotate R.O.B.'s torso right. */
+        DOWN = 0xAE,        /**< Lower R.O.B.'s shoulders once. */
+        DOWN_2 = 0xFB,      /**< Lower R.O.B.'s shoulders twice. */
+        UP = 0xFA,          /**< Raise R.O.B.'s shoulders once. */
+        UP_2 = 0xBB,        /**< Raise R.O.B.'s shoulders twice. */
+        CLOSE = 0xBE,       /**< Close R.O.B.'s arms. */
+        OPEN = 0xEE,        /**< Open R.O.B.'s arms. */
+        LED_DISABLE = 0xAA, /**< Disable R.O.B.'s LED. */
+        LED_ENABLE = 0xEB,  /**< Enable R.O.B.'s LED. */
+        RECALIBRATE = 0xAB, /**< Return R.O.B. to his power on position. */
 #if __cplusplus > 201103L
-        CALIBRATE_MOTORS [[deprecated("Use RECALIBRATE instead.")]] = 0xAB,
-        ARMS_LEFT [[deprecated("Use LEFT instead.")]] = 0xBA,
-        ARMS_RIGHT [[deprecated("Use RIGHT instead.")]] = 0xEA,
-        ARMS_LOWER [[deprecated("Use DOWN instead.")]] = 0xAE,
-        ARMS_LOWER_2 [[deprecated("Use DOWN_2 instead.")]] = 0xFB,
-        ARMS_RAISE [[deprecated("Use UP instead.")]] = 0xFA,
-        ARMS_RAISE_2 [[deprecated("Use UP_2 instead.")]] = 0xBB,
-        HANDS_CLOSE [[deprecated("Use CLOSE instead.")]] = 0xBE,
-        HANDS_OPEN [[deprecated("Use OPEN instead.")]] = 0xEE,
-        TEST_LED [[deprecated("Use LED_ENABLE instead.")]] = 0xEB,
+        CALIBRATE_MOTORS [[deprecated("Use RECALIBRATE instead.")]] = 0xAB, /**< \deprecated Use RECALIBRATE instead. */
+        ARMS_LEFT [[deprecated("Use LEFT instead.")]] = 0xBA,               /**< \deprecated Use LEFT instead. */
+        ARMS_RIGHT [[deprecated("Use RIGHT instead.")]] = 0xEA,             /**< \deprecated Use RIGHT instead. */
+        ARMS_LOWER [[deprecated("Use DOWN instead.")]] = 0xAE,              /**< \deprecated Use DOWN instead. */
+        ARMS_LOWER_2 [[deprecated("Use DOWN_2 instead.")]] = 0xFB,          /**< \deprecated Use DOWN_2 instead. */
+        ARMS_RAISE [[deprecated("Use UP instead.")]] = 0xFA,                /**< \deprecated Use UP instead. */
+        ARMS_RAISE_2 [[deprecated("Use UP_2 instead.")]] = 0xBB,            /**< \deprecated Use UP_2 instead. */
+        HANDS_CLOSE [[deprecated("Use CLOSE instead.")]] = 0xBE,            /**< \deprecated Use CLOSE instead. */
+        HANDS_OPEN [[deprecated("Use OPEN instead.")]] = 0xEE,              /**< \deprecated Use OPEN instead. */
+        TEST_LED [[deprecated("Use LED_ENABLE instead.")]] = 0xEB,          /**< \deprecated Use LED_ENABLE instead. */
 #else
-        CALIBRATE_MOTORS = 0xAB,
-        ARMS_LEFT = 0xBA,
-        ARMS_RIGHT = 0xEA,
-        ARMS_LOWER = 0xAE,
-        ARMS_LOWER_2 = 0xFB,
-        ARMS_RAISE = 0xFA,
-        ARMS_RAISE_2 = 0xBB,
-        HANDS_CLOSE = 0xBE,
-        HANDS_OPEN = 0xEE,
-        TEST_LED = 0xEB,
+        CALIBRATE_MOTORS = 0xAB,    /**< \deprecated Use RECALIBRATE instead. */
+        ARMS_LEFT = 0xBA,           /**< \deprecated Use LEFT instead. */
+        ARMS_RIGHT = 0xEA,          /**< \deprecated Use RIGHT instead. */
+        ARMS_LOWER = 0xAE,          /**< \deprecated Use DOWN instead. */
+        ARMS_LOWER_2 = 0xFB,        /**< \deprecated Use DOWN_2 instead. */
+        ARMS_RAISE = 0xFA,          /**< \deprecated Use UP instead. */
+        ARMS_RAISE_2 = 0xBB,        /**< \deprecated Use UP_2 instead. */
+        HANDS_CLOSE = 0xBE,         /**< \deprecated Use CLOSE instead. */
+        HANDS_OPEN = 0xEE,          /**< \deprecated Use OPEN instead. */
+        TEST_LED = 0xEB,            /**< \deprecated Use LED_ENABLE instead. */
 #endif
     };
 
+    /**
+     * \brief Valid targets for commands
+     */
     enum class CommandTarget {
-        PHOTOSENSOR,
-        MAIN_CPU,
+        PHOTOSENSOR,    /**< Target R.O.B.'s optical sensor. */
+        MAIN_CPU,       /**< Target R.O.B.'s motherboard. */
     };
 
+    /**
+     * \brief Error codes
+     */
     enum class ErrorCode : int {
-        SUCCESS = 0, // Executed as expected
-        E_SIGGEN,    // Signal generation error
+        SUCCESS = 0,    /**< No errors encountered during execution. */
+        E_SIGGEN,       /**< An unspecified error occured during signal generation. */
     };
 
+    /**
+     * \brief <em> constructor </em>
+     *
+     * \param[in] pin The digital GPIO used to send commands
+     * \param[in] target The target of the commands <em> Default:
+     * \c nes::rob::CommandTarget::PHOTOSENSOR </em>
+     * \par
+     * - \c NesRob::CommandTarget::PHOTOSENSOR
+     * - \c NesRob::CommandTarget::MAIN_CPU
+     *
+     * \see NesRob::CommandTarget
+     */
     NesRob (unsigned int pin, CommandTarget target = CommandTarget::PHOTOSENSOR);
+
+    /**
+     * \brief <em> destructor </em>
+     */
     ~NesRob (void);
 
+    /**
+     * \deprecated Use NesRob::sendCommand instead.
+     *
+     * \brief Blink command to R.O.B.
+     *
+     * \param[in] command The command you wish R.O.B. to perform
+     * \par
+     * - \c NesRob::Command::LEFT
+     * - \c NesRob::Command::RIGHT
+     * - \c NesRob::Command::DOWN
+     * - \c NesRob::Command::DOWN_2
+     * - \c NesRob::Command::UP
+     * - \c NesRob::Command::UP_2
+     * - \c NesRob::Command::OPEN
+     * - \c NesRob::Command::CLOSE
+     * - \c NesRob::Command::LED_DISABLE
+     * - \c NesRob::Command::LED_ENABLE
+     * - \c NesRob::Command::RECALIBRATE
+     *
+     * \see NesRob::Command
+     * \see NesRob::sendCommand
+     */
 #if __cplusplus > 201103L
     [[deprecated("Use sendCommand() instead.")]]
 #endif
     void blinkCommand(Command command) const;
 
+    /**
+     * \brief Send command to R.O.B.
+     *
+     * \param[in] command The command you wish R.O.B. to perform
+     * \par
+     * - \c NesRob::Command::LEFT
+     * - \c NesRob::Command::RIGHT
+     * - \c NesRob::Command::DOWN
+     * - \c NesRob::Command::DOWN_2
+     * - \c NesRob::Command::UP
+     * - \c NesRob::Command::UP_2
+     * - \c NesRob::Command::OPEN
+     * - \c NesRob::Command::CLOSE
+     * - \c NesRob::Command::LED_DISABLE
+     * - \c NesRob::Command::LED_ENABLE
+     * - \c NesRob::Command::RECALIBRATE
+     *
+     * \returns \c int An error code describing errors encountered during
+     * processing
+     * \retval NesRob::SUCCESS No errors encountered during processing.
+     * \retval NesRob::E_SIGGEN An unspecified error occured during signal
+     * generation.
+     *
+     * \see NesRob::Command
+     */
     int sendCommand(Command command) const;
 
   private:

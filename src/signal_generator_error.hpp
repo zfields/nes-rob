@@ -5,11 +5,14 @@
 
 namespace nes { namespace rob {
 
+/**
+ * \brief Signal Generator Errors
+ */
 enum class signal_generator_error
 {
-    success = 0,
-    driver_error,
-    driver_init
+    success = 0,    /**< Success. */
+    driver_error,   /**< Pulse driver error occurred. */
+    driver_init     /**< Failed to initialize pulse driver. */
 };
 
 std::error_code make_error_code(signal_generator_error e);

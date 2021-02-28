@@ -13,11 +13,11 @@ SignalGenerator::SignalGenerator (
 
 std::error_code
 SignalGenerator::init (
-    void * params_
+    void * reserved_
 ) {
     std::error_code result;
 
-    (void)params_;  // ignore parameters
+    (void)reserved_;  // ignore parameters
 
     if (_driver->init(nullptr)) {
         result = make_error_code(signal_generator_error::driver_init);

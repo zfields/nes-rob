@@ -7,11 +7,18 @@
 
 namespace nes { namespace rob {
 
+/**
+ * \brief The Arduino implementation of the hardware abstraction layer
+ * interface
+ *
+ * The hardware abstraction layer abstracts Arduino specific behavior such as
+ * GPIO peripherals, clock timing, and other configuration.
+ */
 class HalArduino final : public HardwareAbstractionLayer {
   public:
-    std::error_code delayMicroseconds (unsigned int pin) const override;
+    std::error_code delayMicroseconds (unsigned int us) const override;
     std::error_code digitalWrite (unsigned int pin, int state) const override;
-    std::error_code init (void * params) override;
+    std::error_code init (void * reserved = nullptr) override;
     std::error_code pinMode (unsigned int pin, int mode) const override;
 };
 

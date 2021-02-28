@@ -15,11 +15,11 @@ WWaveDriver::WWaveDriver (
 
 std::error_code
 WWaveDriver::init (
-    void * params_
+    void * reserved_
 ) {
     std::error_code result;
 
-    (void)params_;  // ignore parameters
+    (void)reserved_;  // ignore parameters
 
     // Configure the HAL (high-impedence)
     if (_hal->init(nullptr)) {

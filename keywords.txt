@@ -9,7 +9,7 @@
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-Command			KEYWORD2
+Command				KEYWORD2
 ErrorCode			KEYWORD2
 CommandTarget			KEYWORD2
 sendCommand			KEYWORD2
@@ -26,7 +26,7 @@ NesRob				KEYWORD3
 LEFT				LITERAL1
 RIGHT				LITERAL1
 LOWER				LITERAL1
-LOWER_2			LITERAL1
+LOWER_2				LITERAL1
 UP				LITERAL1
 UP_2				LITERAL1
 CLOSE				LITERAL1
@@ -35,7 +35,7 @@ RECALIBRATE			LITERAL1
 LED_DISABLE			LITERAL1
 LED_ENABLE			LITERAL1
 
-SUCCESS			LITERAL1
+SUCCESS				LITERAL1
 E_SIGGEN			LITERAL1
 
 MAIN_CPU			LITERAL1

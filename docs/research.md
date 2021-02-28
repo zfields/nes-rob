@@ -1,7 +1,7 @@
 R.O.B. Reverse Engineered
 =========================
 
-Reverse Engineering the Nintendo Robot Operating Buddy (#NES-012).
+Reverse Engineering the Nintendo Robotic Operating Buddy (#NES-012).
 
 ![U.S. Patent Drawing of R.O.B.](img/nes-rob-patent-drawing.jpg)
 
@@ -115,8 +115,8 @@ Wired Signals
 
 The R.O.B. has a chip in its head used to transform incoming light signals. As
 each light pulse is successfully recognized, a distinct,
-[marker signal](#marker-signal) is sent across the ribbon cable from the MCU in
-R.O.B.'s  head to the logic chip in the base.
+[marker signal](#marker-signal) is sent across the ribbon cable from the IC in
+R.O.B.'s head to the MCU in the base.
 
 ### Ribbon Cable
 
