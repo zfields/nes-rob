@@ -1,10 +1,14 @@
 /*
-  Close R.O.B.'s Arms
+  Twist R.O.B.'s Torso Left and Right
 
-  Turns on and off a light emitting diode (LED) connected to a digital pin to
-  send control signals to the NES R.O.B. When R.O.B. is powered on, it executes
-  a calibration routine, which leaves it facing forward with arms open. This
-  sketch causes R.O.B.'s arms to close, validating your hardware configuration.
+  The Nintendo R.O.B. comprises of three electric motors, which enable movement.
+
+  1. Base - Turns torso right or left.
+  2. Right Shoulder - Move shoulders up or down.
+  3. Left Shoulder - Adjust arms open or close.
+
+  This sketch is designed to exercise the base motor, which will cause
+  R.O.B.'s torso to twist left and right.
 
   The circuit:
   - Use the onboard LED (may require a brighter LED if the room is too bright).
@@ -31,8 +35,10 @@ void setup() {
 
 }
 
-// Blink command at 1 Hz
+// Exercise Base Motor
 void loop() {
-  rob.sendCommand(NesRob::Command::CLOSE);
-  ::delay(1000);
+  rob.sendCommand(NesRob::Command::LEFT);
+  ::delay(3000);  // wait for 3 seconds
+  rob.sendCommand(NesRob::Command::RIGHT);
+  ::delay(3000);  // wait for 3 seconds
 }

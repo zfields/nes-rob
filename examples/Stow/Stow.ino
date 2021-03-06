@@ -1,14 +1,9 @@
 /*
   Prepare R.O.B. for storage in his original packaging
 
-  Turns on and off a light emitting diode (LED) connected to LED_BUILTIN, which
-  sends control signals to the NES R.O.B. When the LED signal is viewed by
-  R.O.B., the calibration routine will execute and R.O.B. will return to the
-  position required to fit inside the styrofoam mold of the original packaging.
-
-  This sketch relies on timing delays to know when R.O.B. has finished executing
-  each command, before submitting any subsequent commands. R.O.B.'s response
-  validates your hardware configuration.
+  First, the recalibration routine executes, leaving R.O.B. in a known state.
+  Then the subsequent commands return R.O.B. to the position required to fit in
+  the styrofoam mold of the original packaging.
 
   The circuit:
   - Use the onboard LED (may require a brighter LED if the room is too bright).
@@ -30,14 +25,15 @@
 
 NesRob rob(LED_BUILTIN);
 
+// Put R.O.B. into known position, then prepare for storage
 void setup() {
   rob.sendCommand(NesRob::Command::RECALIBRATE);
   ::delay(11500);  // wait for 11.5 seconds
-  rob.sendCommand(NesRob::Command::LOWER_2);
+  rob.sendCommand(NesRob::Command::DOWN_2);
   ::delay(3500);  // wait for 3.5 seconds
-  rob.sendCommand(NesRob::Command::LOWER_2);
+  rob.sendCommand(NesRob::Command::DOWN_2);
   ::delay(3500);  // wait for 3.5 seconds
-  rob.sendCommand(NesRob::Command::LOWER);
+  rob.sendCommand(NesRob::Command::DOWN);
   ::delay(2500);  // wait for 2.5 seconds
   rob.sendCommand(NesRob::Command::CLOSE);
 }

@@ -22,17 +22,17 @@ class NesRob {
      * \brief Available R.O.B. Commands
      */
     enum class Command : uint8_t {
-        LEFT = 0xBA,        /**< Rotate R.O.B.'s torso left. */
-        RIGHT = 0xEA,       /**< Rotate R.O.B.'s torso right. */
-        DOWN = 0xAE,        /**< Lower R.O.B.'s shoulders once. */
-        DOWN_2 = 0xFB,      /**< Lower R.O.B.'s shoulders twice. */
-        UP = 0xFA,          /**< Raise R.O.B.'s shoulders once. */
-        UP_2 = 0xBB,        /**< Raise R.O.B.'s shoulders twice. */
+        LEFT = 0xBA,        /**< Rotate R.O.B.'s torso left one station. */
+        RIGHT = 0xEA,       /**< Rotate R.O.B.'s torso right one station. */
+        DOWN = 0xAE,        /**< Lower R.O.B.'s shoulders one notch. */
+        DOWN_2 = 0xFB,      /**< Lower R.O.B.'s shoulders two notches. */
+        UP = 0xFA,          /**< Raise R.O.B.'s shoulders one notch. */
+        UP_2 = 0xBB,        /**< Raise R.O.B.'s shoulders two notches. */
         CLOSE = 0xBE,       /**< Close R.O.B.'s arms. */
         OPEN = 0xEE,        /**< Open R.O.B.'s arms. */
         LED_DISABLE = 0xAA, /**< Disable R.O.B.'s LED. */
         LED_ENABLE = 0xEB,  /**< Enable R.O.B.'s LED. */
-        RECALIBRATE = 0xAB, /**< Return R.O.B. to his power on position. */
+        RECALIBRATE = 0xAB, /**< Reruns the start-up calibration routine. */
 #if __cplusplus > 201103L
         CALIBRATE_MOTORS [[deprecated("Use RECALIBRATE instead.")]] = 0xAB, /**< \deprecated Use RECALIBRATE instead. */
         ARMS_LEFT [[deprecated("Use LEFT instead.")]] = 0xBA,               /**< \deprecated Use LEFT instead. */
@@ -60,10 +60,16 @@ class NesRob {
 
     /**
      * \brief Valid targets for commands
+     *
+     * \note The `MAIN_CPU` target requires hardware modification to utilize.
+     * The signal should be injected inline with the ribbon cable, running down
+     * R.O.B.'s neck from his head to the base.
+     *
+     * \see NesRob::Command
      */
     enum class CommandTarget {
-        PHOTOSENSOR,    /**< Target R.O.B.'s optical sensor. */
-        MAIN_CPU,       /**< Target R.O.B.'s motherboard. */
+        PHOTOSENSOR,    /**< Generates NTSC signal for the optical sensor in the left eye. */
+        MAIN_CPU,       /**< Generates the W square wave for the main CPU on R.O.B.'s motherboard. */
     };
 
     /**
@@ -75,11 +81,11 @@ class NesRob {
     };
 
     /**
-     * \brief <em> constructor </em>
+     * \brief Allocate required resources
      *
      * \param[in] pin The digital GPIO used to send commands
      * \param[in] target The target of the commands <em> Default:
-     * \c nes::rob::CommandTarget::PHOTOSENSOR </em>
+     * \c NesRob::CommandTarget::PHOTOSENSOR </em>
      * \par
      * - \c NesRob::CommandTarget::PHOTOSENSOR
      * - \c NesRob::CommandTarget::MAIN_CPU
@@ -89,14 +95,14 @@ class NesRob {
     NesRob (unsigned int pin, CommandTarget target = CommandTarget::PHOTOSENSOR);
 
     /**
-     * \brief <em> destructor </em>
+     * \brief Destroy allocated resources
      */
     ~NesRob (void);
 
     /**
-     * \deprecated Use NesRob::sendCommand instead.
-     *
      * \brief Blink command to R.O.B.
+     *
+     * \deprecated Use NesRob::sendCommand instead.
      *
      * \param[in] command The command you wish R.O.B. to perform
      * \par

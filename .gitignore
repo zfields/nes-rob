@@ -1,5 +1,11 @@
 .vscode/
 docs/html/
 
+# Secrets
+.gitconfig
+.netrc
+
+# Artifacts
+*.gc*
 a.out
 nes_rob_tests

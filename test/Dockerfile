@@ -1,10 +1,13 @@
 # Container with dependencies necessary to run unit-tests and code coverage
 
 # Build development environment
-# $ docker build . --tag nes-rob
+# $ docker build . --tag nes-rob-test
 
 # Launch development environment
-# $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob
+# $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob-test
+
+# Restore ownership
+# $ sudo chown -R <user>:<group> ..
 
 # Base Image
 FROM alpine

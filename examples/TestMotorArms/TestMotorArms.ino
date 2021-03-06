@@ -1,12 +1,14 @@
 /*
-  Blink R.O.B.'s LED
+  Close and Open R.O.B.'s Arms
 
-  The light emitting diode (LED) on R.O.B.'s head will turn on for one second,
-  then off again for one second, indefinitely. This sketch works by blinking
-  commands over an LED connected to `LED_BUILTIN`. When those flashes are viewed
-  by R.O.B., he will respond to the commands by blinking his own LED. This
-  sketch is designed to elicit a simple response from R.O.B. and validate your
-  hardware configuration.
+  The Nintendo R.O.B. comprises of three electric motors, which enable movement.
+
+  1. Base - Turns torso right or left.
+  2. Right Shoulder - Move shoulders up or down.
+  3. Left Shoulder - Adjust arms open or close.
+
+  This sketch is designed to exercise the left shoulder motor, which will cause
+  R.O.B.'s arms to close and open.
 
   The circuit:
   - Use the onboard LED (may require a brighter LED if the room is too bright).
@@ -33,9 +35,10 @@ void setup() {
 
 }
 
+// Exercise Arms Motor
 void loop() {
-  rob.sendCommand(NesRob::Command::LED_ENABLE);
-  ::delay(1000);  // wait for a second
-  rob.sendCommand(NesRob::Command::LED_DISABLE);
-  ::delay(1000);  // wait for a second
+  rob.sendCommand(NesRob::Command::CLOSE);
+  ::delay(5000);  // wait for 3 seconds
+  rob.sendCommand(NesRob::Command::OPEN);
+  ::delay(5000);  // wait for 3 seconds
 }

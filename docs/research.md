@@ -26,10 +26,10 @@ encoded, black and green flashes. In the [command sequence](#command-sequence),
 black flashes are represented as `0`'s, and green flashes are represented as
 `1`'s.
 
-Fortunately, these signals can be reproduced using any color LED and adhering to
-the timing required to emulate NTSC signals. When using an LED, `0` (or black)
-can be recreated by simply leaving the LED off, while `1` (or green) can be
-recreated by turning the LED on.
+Fortunately, these signals can be reproduced using any color LED while adhering
+to the timing required to emulate NTSC signals. When using an LED, `0` (or
+black) can be recreated by simply leaving the LED off, while `1` (or green) can
+be recreated by turning the LED on.
 
 ### Command Sequence
 

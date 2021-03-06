@@ -3,4 +3,4 @@
 	url = https://github.com/catchorg/Catch2.git
 [submodule "test/FakeIt"]
 	path = test/FakeIt
-	url = https://github.com/eranpeer/FakeIt.git
+	url = https://github.com/zfields/FakeIt.git

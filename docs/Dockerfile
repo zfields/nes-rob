@@ -6,21 +6,26 @@
 # Launch development environment
 # $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob-docs
 
+# Restore ownership
+# $ sudo chown -R <user>:<group> ..
+
 # Base Image
 FROM alpine
+
+# Configure Git
+COPY .gitconfig /root/
+COPY .netrc /root/
 
 # Yarn Install Requirements
 RUN ["ash", "-c", "\
     apk add --no-cache \
       doxygen \
-      ttf-freefont \
+      git \
       graphviz \
+      ttf-freefont \
 "]
 
 WORKDIR /nes-rob/
 
 # Remove and Rebuild Documentation
-CMD ["ash", "-c", "\
-    rm -rf /nes-rob/docs/html/ \
- && doxygen Doxyfile \
-"]
+CMD ["/nes-rob/docs/.publish-gh-pages.sh"]
