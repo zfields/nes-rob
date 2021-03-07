@@ -17,7 +17,7 @@ g++ -fprofile-arcs -ftest-coverage -Wall -Wpedantic -O0 -g \
 -I FakeIt/single_header/catch/ \
 -DRUN_ALL_TESTS \
 -o nes_rob_tests \
-&& ./nes_rob_tests \
+&& valgrind ./nes_rob_tests \
 && gcovr --print-summary --sort-percentage --exclude-throw-branches --delete \
   --object-directory . \
   --root ../src \

@@ -17,6 +17,7 @@ RUN ["ash", "-c", "\
     apk add --no-cache \
       gcovr \
       g++ \
+      valgrind \
 "]
 
 WORKDIR /nes-rob/test/
