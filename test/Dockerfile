@@ -6,9 +6,6 @@
 # Launch development environment
 # $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob-test
 
-# Restore ownership
-# $ sudo chown -R <user>:<group> ..
-
 # Base Image
 FROM alpine
 

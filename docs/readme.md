@@ -97,6 +97,72 @@ to view the project page.
 [Click here](https://github.com/zfields/BluesRob/blob/main/BluesRob.ino) for the
 application source code, and an example of usage with native interrupts.
 
+Running Tests
+-------------
+
+The tests are designed to be executed using Docker, and the environment required
+by the tests is defined in `test/Dockerfile`. The following directions are
+provided to aid in executing the tests in a container.
+
+1. From the `nes-rob` folder, build the container with the following command:
+
+```none
+docker build test --tag nes-rob-test
+```
+
+2. Execute the tests inside the container using the following command:
+
+```none
+docker run --rm --volume $(pwd):/nes-rob/ nes-rob-test
+```
+
+3. Similar test results should print to your terminal for review.
+
+```none
+==29== Memcheck, a memory error detector
+==29== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==29== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==29== Command: ./nes_rob_tests
+==29==
+===============================================================================
+All tests passed (98 assertions in 88 test cases)
+
+==29==
+==29== HEAP SUMMARY:
+==29==     in use at exit: 72,704 bytes in 1 blocks
+==29==   total heap usage: 18,118 allocs, 18,117 frees, 1,166,036 bytes allocated
+==29==
+==29== LEAK SUMMARY:
+==29==    definitely lost: 0 bytes in 0 blocks
+==29==    indirectly lost: 0 bytes in 0 blocks
+==29==      possibly lost: 0 bytes in 0 blocks
+==29==    still reachable: 72,704 bytes in 1 blocks
+==29==         suppressed: 0 bytes in 0 blocks
+==29== Rerun with --leak-check=full to see details of leaked memory
+==29==
+==29== For lists of detected and suppressed errors, rerun with: -s
+==29== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: ../src
+------------------------------------------------------------------------------
+File                                       Lines    Exec  Cover   Missing
+------------------------------------------------------------------------------
+signal_generator.cpp                          36      36   100%
+pulse_driver.hpp                               1       1   100%
+led_ntsc_driver.cpp                           34      34   100%
+w_wave_driver.cpp                             44      44   100%
+------------------------------------------------------------------------------
+TOTAL                                        115     115   100%
+------------------------------------------------------------------------------
+lines: 100.0% (115 out of 115)
+branches: 100.0% (134 out of 134)
+```
+
+> _**NOTE:** If you are uncomfortable using Docker, then you may wish to use the
+> Dockerfile as a guide and install the necessary dependencies and execute
+> `./run_all_tests.sh` locally._
+
 Credits
 -------
 

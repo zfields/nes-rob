@@ -22,4 +22,4 @@ g++ -fprofile-arcs -ftest-coverage -Wall -Wpedantic -O0 -g \
   --object-directory . \
   --root ../src \
   --exclude .*_error.* \
-&& rm *.gcno
+&& rm nes_rob_tests *.gcno
