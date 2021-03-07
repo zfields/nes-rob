@@ -273,3 +273,4 @@ Additional Resources
 - [Robots and Computers: #NES-012 by Nintendo](http://www.robotsandcomputers.com/robots/nrob.htm)
 - [Tindie: Bluetooth Control Goggles for R.O.B. Nintendo](https://www.tindie.com/products/cxelectronics/bluetooth-control-goggles-for-rob-nintendo/)
 - [Wikipedia: R.O.B.](https://en.wikipedia.org/wiki/R.O.B.)
+- [YouTube: How to repair/fix R.O.B the robot for the Nintendo NES](https://www.youtube.com/watch?v=9L1UeiIFNOk)
