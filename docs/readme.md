@@ -85,8 +85,8 @@ oscilloscope readings to describe the signal behavior captured in the library.
 [Click here](https://github.com/zfields/nes-rob/tree/main/docs/research.md)
 to view the research page.
 
-Project
--------
+BluesRob Project
+----------------
 
 A project enabling R.O.B. to receive and respond to commands over the global
 cellular network!
