@@ -160,7 +160,7 @@ branches: 100.0% (134 out of 134)
 ```
 
 > _**NOTE:** If you are uncomfortable using Docker, then you may wish to use the
-> Dockerfile as a guide and install the necessary dependencies and execute
+> Dockerfile as a guide to install the necessary dependencies and execute
 > `./run_all_tests.sh` locally._
 
 Credits
