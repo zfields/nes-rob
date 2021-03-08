@@ -13,11 +13,11 @@ LedNtscDriver::LedNtscDriver (
     _pin(pin_)
 { }
 
-std::error_code
+nes::rob::error_code
 LedNtscDriver::init (
     void * reserved_
 ) {
-    std::error_code result;
+    nes::rob::error_code result;
 
     (void)reserved_;  // ignore parameters
 
@@ -35,11 +35,11 @@ LedNtscDriver::init (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 LedNtscDriver::pulse (
     void * reserved_
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
     (void)reserved_;
 
     // Enable LED
@@ -62,11 +62,11 @@ LedNtscDriver::pulse (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 LedNtscDriver::rest (
     void * reserved_
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
     (void)reserved_;
 
     // Disable LED

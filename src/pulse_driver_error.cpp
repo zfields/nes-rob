@@ -1,5 +1,7 @@
 #include "pulse_driver_error.hpp"
 
+#ifndef __AVR__
+
 namespace nes { namespace rob {
 
 class pulse_driver_error_category : public std::error_category
@@ -64,16 +66,22 @@ pulse_driver_error_category::name (
     return "pulse_driver_error";
 }
 
-std::error_code
-nes::rob::make_error_code (
-    pulse_driver_error e
-) {
-    return {static_cast<int>(e), pulse_driver_error_category_instance()};
-}
-
 std::error_condition
 nes::rob::make_error_condition (
     pulse_driver_error e
 ) {
     return {static_cast<int>(e), pulse_driver_error_category_instance()};
+}
+
+#endif // not __AVR__
+
+nes::rob::error_code
+nes::rob::make_error_code (
+    pulse_driver_error e
+) {
+#ifndef __AVR__
+    return {static_cast<int>(e), pulse_driver_error_category_instance()};
+#else // __AVR__
+    return static_cast<nes::rob::error_code>(e);
+#endif // not __AVR__
 }

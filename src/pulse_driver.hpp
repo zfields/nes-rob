@@ -1,7 +1,7 @@
 #ifndef PULSE_DRIVER_HPP
 #define PULSE_DRIVER_HPP
 
-#include <system_error>
+#include "pulse_driver_error.hpp"
 
 namespace nes { namespace rob {
 
@@ -24,14 +24,14 @@ class PulseDriver {
      * \param[in,out] reserved Supports driver specific initialization
      * parameters
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::pulse_driver_error::success No errors encountered
      * during processing.
      * \retval nes::rob::pulse_driver_error::hal_init A HAL error occured during
      * the pulse driver initialization.
      */
-    virtual std::error_code init (void * reserved = nullptr) = 0;
+    virtual nes::rob::error_code init (void * reserved = nullptr) = 0;
 
     /**
      * \brief Generate a protocol specific pulse
@@ -42,7 +42,7 @@ class PulseDriver {
      * \param[in,out] reserved Supports driver specific implementation
      * parameters
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::pulse_driver_error::success No errors encountered
      * during processing.
@@ -53,7 +53,7 @@ class PulseDriver {
      * \retval nes::rob::pulse_driver_error::hal_gpio_state Unable to set GPIO
      * state during pulse generation.
      */
-    virtual std::error_code pulse (void * reserved = nullptr) const = 0;
+    virtual nes::rob::error_code pulse (void * reserved = nullptr) const = 0;
 
     /**
      * \brief Generate a protocol specified rest period
@@ -63,7 +63,7 @@ class PulseDriver {
      * \param[in,out] reserved Supports driver specific implementation
      * parameters
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::pulse_driver_error::success No errors encountered
      * during processing.
@@ -74,7 +74,7 @@ class PulseDriver {
      * \retval nes::rob::pulse_driver_error::hal_gpio_state Unable to set GPIO
      * pin in resting state.
      */
-    virtual std::error_code rest (void * reserved = nullptr) const = 0;
+    virtual nes::rob::error_code rest (void * reserved = nullptr) const = 0;
 };
 
 }} // namespace nes::rob

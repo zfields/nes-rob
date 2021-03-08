@@ -1,7 +1,10 @@
 #ifndef SIGNAL_GENERATOR_ERROR_HPP
 #define SIGNAL_GENERATOR_ERROR_HPP
 
-#include <system_error>
+#ifndef __AVR__
+  #include <system_error>
+  #include <type_traits>
+#endif
 
 namespace nes { namespace rob {
 
@@ -15,10 +18,22 @@ enum class signal_generator_error
     driver_init     /**< Failed to initialize pulse driver. */
 };
 
-std::error_code make_error_code(signal_generator_error e);
+#ifndef __AVR__
+
+typedef std::error_code error_code;
 std::error_condition make_error_condition(signal_generator_error e);
 
+#else // __AVR__
+
+typedef int error_code;
+
+#endif // not __AVR__
+
+error_code make_error_code(signal_generator_error e);
+
 }} // namespace nes::rob
+
+#ifndef __AVR__
 
 namespace std {
 
@@ -26,5 +41,7 @@ template <>
 struct is_error_code_enum<nes::rob::signal_generator_error> : true_type {};
 
 }
+
+#endif // not __AVR__
 
 #endif // SIGNAL_GENERATOR_ERROR_HPP

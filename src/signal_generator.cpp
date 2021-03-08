@@ -11,11 +11,11 @@ SignalGenerator::SignalGenerator (
     _driver(driver_)
 { }
 
-std::error_code
+nes::rob::error_code
 SignalGenerator::init (
     void * reserved_
 ) {
-    std::error_code result;
+    nes::rob::error_code result;
 
     (void)reserved_;  // ignore parameters
 
@@ -28,11 +28,11 @@ SignalGenerator::init (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 SignalGenerator::signal (
     int sequence_
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
     const unsigned int preamble[] = {0,0,0,0,1,0};
     bool halt = false;
 
@@ -60,11 +60,11 @@ SignalGenerator::signal (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 SignalGenerator::testSignal (
     void
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
 
     const unsigned int test_signal[] = {1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0};
 

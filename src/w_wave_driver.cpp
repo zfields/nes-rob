@@ -13,11 +13,11 @@ WWaveDriver::WWaveDriver (
     _pin(pin_)
 { }
 
-std::error_code
+nes::rob::error_code
 WWaveDriver::init (
     void * reserved_
 ) {
-    std::error_code result;
+    nes::rob::error_code result;
 
     (void)reserved_;  // ignore parameters
 
@@ -33,11 +33,11 @@ WWaveDriver::init (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 WWaveDriver::pulse (
     void * reserved_
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
     (void)reserved_;
 
     // Sink current for 800us (~4us of MCU instructions)
@@ -77,11 +77,11 @@ WWaveDriver::pulse (
     return result;
 }
 
-std::error_code
+nes::rob::error_code
 WWaveDriver::rest (
     void * reserved_
 ) const {
-    std::error_code result;
+    nes::rob::error_code result;
     (void)reserved_;
 
     // High-Z for time slice (~3us of MCU instructions)

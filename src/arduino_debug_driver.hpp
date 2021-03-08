@@ -15,9 +15,9 @@ namespace nes { namespace rob {
  */
 class ArduinoDebugDriver final : public PulseDriver {
   public:
-    std::error_code init (void * reserved = nullptr) override;
-    std::error_code pulse (void * reserved = nullptr) const override;
-    std::error_code rest (void * reserved = nullptr) const override;
+    nes::rob::error_code init (void * reserved = nullptr) override;
+    nes::rob::error_code pulse (void * reserved = nullptr) const override;
+    nes::rob::error_code rest (void * reserved = nullptr) const override;
 };
 
 }} // namespace nes::rob

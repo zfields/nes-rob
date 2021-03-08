@@ -13,7 +13,7 @@ namespace
     static const unsigned int MAX_DELAY_MICROSECONDS = 16383;
 } // namespace
 
-std::error_code
+nes::rob::error_code
 HalArduino::delayMicroseconds (
     unsigned int us_
 ) const {
@@ -25,7 +25,7 @@ HalArduino::delayMicroseconds (
     return make_error_code(hal_error::success);
 }
 
-std::error_code
+nes::rob::error_code
 HalArduino::digitalWrite (
     unsigned int pin_,
     int state_
@@ -34,7 +34,7 @@ HalArduino::digitalWrite (
     return make_error_code(hal_error::success);
 }
 
-std::error_code
+nes::rob::error_code
 HalArduino::init (
     void * reserved_
 ) {
@@ -42,7 +42,7 @@ HalArduino::init (
     return make_error_code(hal_error::success);
 }
 
-std::error_code
+nes::rob::error_code
 HalArduino::pinMode (
     unsigned int pin_,
     int mode_

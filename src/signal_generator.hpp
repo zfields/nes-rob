@@ -1,7 +1,7 @@
 #ifndef SIGNAL_GENERATOR_HPP
 #define SIGNAL_GENERATOR_HPP
 
-#include <system_error>
+#include "signal_generator_error.hpp"
 
 namespace nes { namespace rob {
 
@@ -30,14 +30,14 @@ class SignalGenerator {
      * \param[in,out] reserved Supports driver specific initialization
      * parameters
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::signal_generator_error::success No errors encountered
      * during processing.
      * \retval nes::rob::signal_generator_error::driver_init A HAL error occured
      * during the pulse driver initialization.
      */
-    std::error_code init (void * reserved = nullptr);
+    nes::rob::error_code init (void * reserved = nullptr);
 
     /**
      * \brief Generate a protocol compatible signal
@@ -46,14 +46,14 @@ class SignalGenerator {
      *
      * \param[in] sequence 8-bit binary sequence used to invoke R.O.B.
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::signal_generator_error::success No errors encountered
      * during processing.
      * \retval nes::rob::signal_generator_error::driver_error A driver error
      * occured during pulse driver invocation.
      */
-    std::error_code signal (int sequence) const;
+    nes::rob::error_code signal (int sequence) const;
 
     /**
      * \brief Generate the R.O.B. test signal
@@ -62,14 +62,14 @@ class SignalGenerator {
      * R.O.B.'s LED is disabled, then the LED will be enabled and then disabled.
      * When sent continuously, the LED will blink on a fixed interval.
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::signal_generator_error::success No errors encountered
      * during processing.
      * \retval nes::rob::signal_generator_error::driver_error A driver error
      * occured during pulse driver invocation.
      */
-    std::error_code testSignal (void) const;
+    nes::rob::error_code testSignal (void) const;
 
   private:
     PulseDriver * const _driver;

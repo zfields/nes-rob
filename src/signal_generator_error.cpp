@@ -1,5 +1,7 @@
 #include "signal_generator_error.hpp"
 
+#ifndef __AVR__
+
 namespace nes { namespace rob {
 
 class signal_generator_error_category : public std::error_category
@@ -60,16 +62,22 @@ signal_generator_error_category::name (
     return "signal_generator_error";
 }
 
-std::error_code
-nes::rob::make_error_code (
-    signal_generator_error e
-) {
-    return {static_cast<int>(e), signal_generator_error_category_instance()};
-}
-
 std::error_condition
 nes::rob::make_error_condition (
     signal_generator_error e
 ) {
     return {static_cast<int>(e), signal_generator_error_category_instance()};
+}
+
+#endif // not __AVR__
+
+nes::rob::error_code
+nes::rob::make_error_code (
+    signal_generator_error e
+) {
+#ifndef __AVR__
+    return {static_cast<int>(e), signal_generator_error_category_instance()};
+#else // __AVR__
+    return static_cast<nes::rob::error_code>(e);
+#endif // not __AVR__
 }

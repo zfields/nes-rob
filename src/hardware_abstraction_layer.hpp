@@ -1,7 +1,7 @@
 #ifndef HARDWARE_ABSTRACTION_LAYER_HPP
 #define HARDWARE_ABSTRACTION_LAYER_HPP
 
-#include <system_error>
+#include "hal_error.hpp"
 
 namespace nes { namespace rob {
 
@@ -55,28 +55,28 @@ class HardwareAbstractionLayer {
      * \param[in,out] reserved Supports hardware specific initialization
      * parameters
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::hal_error::success No errors encountered during
      * processing.
      * \retval nes::rob::hal_error::sys_config An unspecified error occured
      * during system configuration.
      */
-    virtual std::error_code init (void * reserved = nullptr) = 0;
+    virtual nes::rob::error_code init (void * reserved = nullptr) = 0;
 
     /**
      * \brief Delay program execution for the specified number of microseconds
      *
      * \param[in] us The number of microseconds to delay
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::hal_error::success No errors encountered during
      * processing.
      * \retval nes::rob::hal_error::sys_clock An unspecified error occured
      * while interacting with the system clock.
      */
-    virtual std::error_code delayMicroseconds (unsigned int us) const = 0;
+    virtual nes::rob::error_code delayMicroseconds (unsigned int us) const = 0;
 
     /**
      * \brief Drive the output voltage of a digital GPIO pin.
@@ -87,7 +87,7 @@ class HardwareAbstractionLayer {
      * - \c PIN_STATE_HIGH
      * - \c PIN_STATE_LOW
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::hal_error::success No errors encountered during
      * processing.
@@ -98,7 +98,7 @@ class HardwareAbstractionLayer {
      * \see nes::rob::HardwareAbstractionLayer::PIN_STATE_LOW
      * \see nes::rob::HardwareAbstractionLayer::pinMode
      */
-    virtual std::error_code digitalWrite (unsigned int pin, int state) const = 0;
+    virtual nes::rob::error_code digitalWrite (unsigned int pin, int state) const = 0;
 
     /**
      * \brief Drive the output voltage of a digital GPIO pin.
@@ -110,7 +110,7 @@ class HardwareAbstractionLayer {
      * - \c PIN_MODE_INPUT_PULLUP
      * - \c PIN_MODE_OUTPUT
      *
-     * \returns \c std::error code describing errors encountered during
+     * \returns an \c nes::rob::error_code describing errors encountered during
      * processing
      * \retval nes::rob::hal_error::success No errors encountered during
      * processing.
@@ -122,7 +122,7 @@ class HardwareAbstractionLayer {
      * \see nes::rob::HardwareAbstractionLayer::PIN_MODE_OUTPUT
      * \see nes::rob::HardwareAbstractionLayer::digitalWrite
      */
-    virtual std::error_code pinMode (unsigned int pin, int mode) const = 0;
+    virtual nes::rob::error_code pinMode (unsigned int pin, int mode) const = 0;
 };
 
 }} // namespace nes::rob

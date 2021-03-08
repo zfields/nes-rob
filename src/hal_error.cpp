@@ -1,5 +1,7 @@
 #include "hal_error.hpp"
 
+#ifndef __AVR__
+
 namespace nes { namespace rob {
 
 class hal_error_category : public std::error_category
@@ -62,16 +64,22 @@ hal_error_category::message (
     };
 }
 
-std::error_code
-nes::rob::make_error_code (
-    hal_error e
-) {
-    return {static_cast<int>(e), hal_error_category_instance()};
-}
-
 std::error_condition
 nes::rob::make_error_condition (
     hal_error e
 ) {
     return {static_cast<int>(e), hal_error_category_instance()};
+}
+
+#endif // not __AVR__
+
+nes::rob::error_code
+nes::rob::make_error_code (
+    hal_error e
+) {
+#ifndef __AVR__
+    return {static_cast<int>(e), hal_error_category_instance()};
+#else // __AVR__
+    return static_cast<nes::rob::error_code>(e);
+#endif // not __AVR__
 }

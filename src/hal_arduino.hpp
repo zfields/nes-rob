@@ -1,8 +1,6 @@
 #ifndef HAL_ARDUINO_HPP
 #define HAL_ARDUINO_HPP
 
-#include <system_error>
-
 #include "hardware_abstraction_layer.hpp"
 
 namespace nes { namespace rob {
@@ -16,10 +14,10 @@ namespace nes { namespace rob {
  */
 class HalArduino final : public HardwareAbstractionLayer {
   public:
-    std::error_code delayMicroseconds (unsigned int us) const override;
-    std::error_code digitalWrite (unsigned int pin, int state) const override;
-    std::error_code init (void * reserved = nullptr) override;
-    std::error_code pinMode (unsigned int pin, int mode) const override;
+    nes::rob::error_code delayMicroseconds (unsigned int us) const override;
+    nes::rob::error_code digitalWrite (unsigned int pin, int state) const override;
+    nes::rob::error_code init (void * reserved = nullptr) override;
+    nes::rob::error_code pinMode (unsigned int pin, int mode) const override;
 };
 
 }} // namespace nes::rob

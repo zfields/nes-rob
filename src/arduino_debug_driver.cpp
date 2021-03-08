@@ -8,7 +8,7 @@
 using namespace nes::rob;
 
 //TODO: Abstract this from Arduino
-std::error_code
+nes::rob::error_code
 ArduinoDebugDriver::init (
     void * reserved_
 ) {
@@ -32,10 +32,10 @@ ArduinoDebugDriver::init (
     Serial.print("PIN_STATE_LOW: ");
     Serial.println(HardwareAbstractionLayer::PIN_STATE_LOW, DEC);
 
-    return pulse_driver_error::success;
+    return make_error_code(pulse_driver_error::success);
 }
 
-std::error_code
+nes::rob::error_code
 ArduinoDebugDriver::pulse (
     void * reserved_
 ) const {
@@ -43,10 +43,10 @@ ArduinoDebugDriver::pulse (
 
     Serial.println("PULSE");
 
-    return pulse_driver_error::success;
+    return make_error_code(pulse_driver_error::success);
 }
 
-std::error_code
+nes::rob::error_code
 ArduinoDebugDriver::rest (
     void * reserved_
 ) const {
@@ -54,5 +54,5 @@ ArduinoDebugDriver::rest (
 
     Serial.println("rest");
 
-    return pulse_driver_error::success;
+    return make_error_code(pulse_driver_error::success);
 }

@@ -1,7 +1,10 @@
 #ifndef HAL_ERROR_HPP
 #define HAL_ERROR_HPP
 
-#include <system_error>
+#ifndef __AVR__
+  #include <system_error>
+  #include <type_traits>
+#endif
 
 namespace nes { namespace rob {
 
@@ -16,10 +19,22 @@ enum class hal_error
     sys_config,         /**< Failed to properly configure hardware. */
 };
 
-std::error_code make_error_code(hal_error e);
+#ifndef __AVR__
+
+typedef std::error_code error_code;
 std::error_condition make_error_condition(hal_error e);
 
+#else // __AVR__
+
+typedef int error_code;
+
+#endif // not __AVR__
+
+error_code make_error_code(hal_error e);
+
 }} // namespace nes::rob
+
+#ifndef __AVR__
 
 namespace std {
 
@@ -27,5 +42,7 @@ template <>
 struct is_error_code_enum<nes::rob::hal_error> : true_type {};
 
 }
+
+#endif // not __AVR__
 
 #endif // HAL_ERROR_HPP
