@@ -30,7 +30,11 @@ HalArduino::digitalWrite (
     unsigned int pin_,
     int state_
 ) const {
+#if defined(ARDUINO_ARCH_MBED) || defined(ARDUINO_ARCH_SAMD)
+    ::digitalWrite(pin_,static_cast<PinStatus>(state_));
+#else
     ::digitalWrite(pin_,state_);
+#endif
     return make_error_code(hal_error::success);
 }
 
@@ -47,7 +51,11 @@ HalArduino::pinMode (
     unsigned int pin_,
     int mode_
 ) const {
+#if defined(ARDUINO_ARCH_MBED) || defined(ARDUINO_ARCH_SAMD)
+    ::pinMode(pin_,static_cast<PinMode>(mode_));
+#else
     ::pinMode(pin_,mode_);
+#endif
     return make_error_code(hal_error::success);
 }
 
