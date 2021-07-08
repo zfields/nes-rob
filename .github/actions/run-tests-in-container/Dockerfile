@@ -3,13 +3,13 @@
 # Build development environment
 # $ docker build . --tag nes-rob-test
 
-# Launch development environment
-# $ docker run --rm --volume $(pwd)/..:/nes-rob/ nes-rob-test
+# Launch development environment (mount source root as /nes-rob/)
+# $ docker run --rm --volume $(pwd)/../../../:/nes-rob/ --workdir /nes-rob/ nes-rob-test
 
 # Base Image
 FROM alpine
 
-# Yarn Install Requirements
+# Testing Dependencies
 RUN ["ash", "-c", "\
     apk add --no-cache \
       gcovr \
@@ -17,5 +17,4 @@ RUN ["ash", "-c", "\
       valgrind \
 "]
 
-WORKDIR /nes-rob/test/
-CMD ["./run_all_tests.sh"]
+ENTRYPOINT ["./test/run_all_tests.sh"]

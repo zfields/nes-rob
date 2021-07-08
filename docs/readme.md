@@ -101,19 +101,20 @@ Running Tests
 -------------
 
 The tests are designed to be executed using Docker, and the environment required
-by the tests is defined in `test/Dockerfile`. The following directions are
-provided to aid in executing the tests in a container.
+by the tests is defined in `.github/actions/run-tests-in-container/Dockerfile`.
+The following directions are provided to aid in executing the tests in
+a container.
 
 1. From the `nes-rob` folder, build the container with the following command:
 
 ```none
-docker build test --tag nes-rob-test
+docker build .github/actions/run-tests-in-container/ --tag nes-rob-test
 ```
 
 2. Execute the tests inside the container using the following command:
 
 ```none
-docker run --rm --volume $(pwd):/nes-rob/ nes-rob-test
+docker run --rm --volume $(pwd):/nes-rob/ --workdir /nes-rob/ nes-rob-test
 ```
 
 3. Similar test results should print to your terminal for review.
