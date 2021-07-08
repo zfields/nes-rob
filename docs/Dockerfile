@@ -16,7 +16,7 @@ FROM alpine
 COPY .gitconfig /root/
 COPY .netrc /root/
 
-# Yarn Install Requirements
+# Install Dependencies
 RUN ["ash", "-c", "\
     apk add --no-cache \
       doxygen \
@@ -24,8 +24,6 @@ RUN ["ash", "-c", "\
       graphviz \
       ttf-freefont \
 "]
-
-WORKDIR /nes-rob/
 
 # Remove and Rebuild Documentation
 CMD ["/nes-rob/docs/.publish-gh-pages.sh"]
