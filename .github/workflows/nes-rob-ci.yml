@@ -1,0 +1,32 @@
+name: NES R.O.B. CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Create Build Dependency Container
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./test/Dockerfile
+          push: false
+          tags: nes-rob-test:latest
+
+      - name: Run Unit-tests
+        id: run_all_tests
+        run: docker run --rm --volume $(pwd):/nes-rob/ nes-rob-test
