@@ -1,0 +1,4 @@
+<map id="nes::rob::HardwareAbstractionLayer" name="nes::rob::HardwareAbstractionLayer">
+<area shape="rect" id="node1" title="The hardware abstraction layer interface." alt="" coords="5,5,200,47"/>
+<area shape="rect" id="node2" href="$classnes_1_1rob_1_1HalArduino.html" title="The Arduino implementation of the hardware abstraction layer interface." alt="" coords="34,95,171,121"/>
+</map>
